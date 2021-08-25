@@ -220,7 +220,7 @@ export default {
                     showConfirmButton: false,
                     timer: 1000
                 });
-                window.location.href = "/";
+                // window.location.href = "/";
             });
         },
 
@@ -239,7 +239,7 @@ export default {
                     config
                 )
                 .then(response => {
-                    //success
+                    console.log(response.data)
                 })
                 .catch(response => {
                     //error

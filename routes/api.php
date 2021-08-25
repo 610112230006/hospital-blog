@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ContentController;
 use App\Http\Controllers\Api\FileController;
+use App\Http\Controllers\Api\ShowController;
 use App\Http\Controllers\Api\SubCategoryController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
@@ -31,6 +32,8 @@ Route::resource('sub-category', SubCategoryController::class);
 Route::post('upload-image', [FileController::class,'uploadImg']);
 Route::post('upload-file', [FileController::class,'uploadFile']);
 
-
+// Show
+Route::get('cont-new-home',[ShowController::class,'ShowNew']);
+Route::get('cont-img-new-home',[ShowController::class,'ShowImgNew']);
 
 

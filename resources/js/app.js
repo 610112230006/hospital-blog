@@ -14,6 +14,7 @@ Vue.component('createuser-component', require('./components/CreateUser.vue').def
 Vue.component('manageuser-component', require('./components/ShowUser.vue').default);
 Vue.component('createcontent-component', require('./components/CreateContent.vue').default);
 Vue.component('carouselhome-component', require('./components/CarouselHome.vue').default);
+Vue.component('home-component', require('./components/Home.vue').default);
 
 
 const app = new Vue({

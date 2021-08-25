@@ -1,19 +1,39 @@
 <template lang="">
     <div>
-        <carousel :perPage="1" :autoplay="true" style="wi:100%">
+        <carousel
+            :perPage="1"
+            :autoplay="true"
+            :navigationEnabled="true"
+            style="wi:100%"
+        >
             <slide>
-                <img src="images/slider/revolution/polo-homepage/2.jpg" width="100%" class="img-fluid" alt="">
+                <img
+                    src="images/slider/slider1.JPG"
+                    width="100%"
+                    class="img-fluid"
+                    alt=""
+                />
             </slide>
             <slide>
-                <img src="images/slider/revolution/polo-homepage/11.jpg" width="100%" class="img-fluid" alt="">                
+                <img
+                    src="images/slider/slider2.JPG"
+                    width="100%"
+                    class="img-fluid"
+                    alt=""
+                />
+            </slide>
+            <slide>
+                <img
+                    src="images/slider/slider3.JPG"
+                    width="100%"
+                    class="img-fluid"
+                    alt=""
+                />
             </slide>
         </carousel>
-        
     </div>
 </template>
 <script>
-export default {
-    
-};
+export default {};
 </script>
 <style lang=""></style>

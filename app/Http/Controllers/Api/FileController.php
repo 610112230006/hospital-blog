@@ -14,7 +14,7 @@ class FileController extends Controller
             $uploadedFiles = $request->images;
             foreach ($uploadedFiles as $file) {
 
-                $pathFile = 'contents/' . date('Y-m');
+                $pathFile = 'public/contents/' . date('Y-m');
                 $namepath = $file->store($pathFile);
                 $resFile = FileUpload::create([
                     'id_content' => $_GET['content_id'],
@@ -23,7 +23,7 @@ class FileController extends Controller
                 ]);
                 // echo $file;
             }
-            return response()->json(['status' => 'ok'],200);
+            return response()->json(['status' => 'ok','name' => $namepath],200);
         }
         return;
     }
