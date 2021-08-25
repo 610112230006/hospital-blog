@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ContentController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -16,14 +17,22 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('layouts.app');
+    return view('home');
 });
 
-Route::resource('user', UserController::class);
-
+Route::get('/user', function () {
+    return view('pages.admin.user.manage-user');
+});
+Route::get('/user-create', function () {
+    return view('pages.admin.user.create-user');
+});
+Route::get('/content-create', function () {
+    return view('pages.content.create-content');
+});
 Route::get('/manage-category', function () {
     return view('pages.admin.category.manage-category');
 });
+Route::post('/content',[ContentController::class, 'store']);
 
 Auth::routes();
 

@@ -6,7 +6,9 @@
                     <li>
                         <a>โทรศัพท์ 0-2590-6157 , 0-2590-6159/ E-mail
                             : team.winai2020@gamil.com</a>
+                        
                     </li>
+
                 </ul>
             </div>
             <div class="col-md-3 d-none d-sm-block">
@@ -28,7 +30,7 @@
     <div class="header-inner">
         <div class="container">
             <!--Logo-->
-            <div id="logo"> <a href="/"><span class="logo-default">POLO</span><span class="logo-dark">POLO</span></a>
+            <div id="logo"> <a href="/"><span class="logo-default"><img src="images/logos/logo-moph.png" alt="" height="60" width="100%" srcset=""></span><span class="logo-dark">POLO</span></a>
             </div>
             <!--End: Logo-->
             <!-- Search -->
@@ -73,8 +75,14 @@
                 <div class="container">
                     <nav>
                         <ul>
-                            <li><a href="index.html">Home</a></li>
-                            <li class="dropdown"><a href="#">Layout</a>
+                            <li><a href="/">หน้าแรก</a></li>
+                            <li><a href="">เกี่ยวกับเรา</a></li>
+                            <li><a href="">งานกฎหมาย</a></li>
+                            <li><a href="">งานวินัย/ละเมิด</a></li>
+                            <li><a href="">งานคุ้มครองจริยธรรม</a></li>
+                            <li><a href="">ร้องเรียน/ร้องทุก</a></li>
+                            <li><a href="">ติดต่อเรา</a></li>
+                            {{-- <li class="dropdown"><a href="#">Layout</a>
                                 <ul class="dropdown-menu">
                                     <li class="dropdown-submenu"><a href="#">Topbar</a>
                                         <ul class="dropdown-menu">
@@ -224,7 +232,7 @@
                                         </ul>
                                     </li>
                                 </ul>
-                            </li>
+                            </li> --}}
 
                         </ul>
                     </nav>

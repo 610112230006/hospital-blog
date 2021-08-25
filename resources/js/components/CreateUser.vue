@@ -8,17 +8,17 @@
                         <form>
                             <div class="form-group row">
                                 <label
-                                    for="example-text-input"
+                                    for="example-email-input"
                                     class="col-2 col-form-label"
-                                    >บัญชีผู้ใช้</label
+                                    >อีเมล</label
                                 >
                                 <div class="col-10">
                                     <input
                                         class="form-control"
-                                        v-model="form.username"
-                                        name="username"
-                                        type="text"
-                                        id="example-text-input"
+                                        type="email"
+                                        name="email"
+                                        v-model="form.email"
+                                        id="example-email-input"
                                     />
                                 </div>
                             </div>
@@ -35,23 +35,6 @@
                                         type="text"
                                         name="password"
                                         id="example-text-input"
-                                    />
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label
-                                    for="example-email-input"
-                                    class="col-2 col-form-label"
-                                    >อีเมล</label
-                                >
-                                <div class="col-10">
-                                    <input
-                                        class="form-control"
-                                        type="email"
-                                        name="email"
-                                        v-model="form.email"
-                                        id="example-email-input"
                                     />
                                 </div>
                             </div>
@@ -107,11 +90,7 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <a
-                                    
-                                    class="btn btn-white"
-                                    >ยกเลิก</a
-                                >
+                                <a class="btn btn-white">ยกเลิก</a>
                                 <button
                                     @click.prevent="AddForm"
                                     class="btn btn-primary"
@@ -131,20 +110,18 @@ export default {
     data() {
         return {
             form: {
-                username: "",
+                email: "",
                 password: "",
                 f_name: "",
                 l_name: "",
-                category_id: "",
-                email: ""
+                category_id: "0"
             }
         };
     },
     methods: {
-        AddForm() {
-            console.log(this.form);
+        AddForm() {            
             axios
-                .post("api/user-contron", this.form)
+                .post('api/user', this.form)
                 .then(response => {
                     this.$swal.fire({
                         position: "center-center",
@@ -153,10 +130,11 @@ export default {
                         showConfirmButton: false,
                         timer: 1000
                     });
-                    // this.$router.push({ name: "manage-account" });
+                    window.location.href = "user";
+
                 })
                 .catch(err => console.log(err));
         }
     }
-}
+};
 </script>

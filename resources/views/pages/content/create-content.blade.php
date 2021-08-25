@@ -1,4 +1,4 @@
 @extends('layouts.app')
 @section('content')
-    <managecate-component/>    
+    <createcontent-component/>
 @endsection

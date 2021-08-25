@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\Content;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
-class UserController extends Controller
+class ContentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::get();
-        return response()->json($users);
+        //
     }
 
     /**
@@ -27,7 +26,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('pages.admin.user.create-user');
+        //
     }
 
     /**
@@ -37,15 +36,23 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        User::create([            
-            'f_name' => $request->f_name,
-            'l_name' => $request->l_name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'category_id' => $request->category_id,
-        ]);
-        return response()->json('ok');
+    { 
+        
+        if ($request->time_show == '') {
+            $time_show = date('Y-m-d');
+        } else{
+            $time_show = $request->time_show;
+        }   
+            $qry =  Content::create([
+                'user_id' => Auth::id(),
+                'title' => $request->title,
+                'type' => $request->type,
+                'time_show' => $time_show,
+                'detail' => $request->detail,            
+            ]);
+            return response()->json($qry);
+        
+        
     }
 
     /**
@@ -90,7 +97,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $del = User::find($id)->delete();
-        return response()->json($del);
+        //
     }
 }
