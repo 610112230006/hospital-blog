@@ -43,7 +43,8 @@
                                 >
                                 <select
                                     v-if="permissCate == 'cate'"
-                                    class="form-control"
+                                    class="form-select"
+                                    :class="{ 'is-invalid': error.type }"
                                     v-model="content.type"
                                 >
                                     <optgroup
@@ -65,8 +66,9 @@
 
                                 <select
                                     v-if="permissCate == 'subCate'"
-                                    class="form-control"
+                                    class="form-select"
                                     v-model="content.type"
+                                    :class="{ 'is-invalid': error.type }"
                                 >
                                     <option
                                         v-for="(optionSubCate,
@@ -186,13 +188,13 @@ export default {
             files: [],
             error: [],
             errorFile: [],
+            errImage:"",
             permissCate: ""
         };
     },
     mounted() {
         CKEDITOR.replace("detail");
         axios.get("auth-user").then(res => {
-            
             if (res.data.category_id == "0") {
                 this.permissCate = "cate";
                 axios.get("api/category").then(res => {
@@ -203,16 +205,19 @@ export default {
                 });
             } else {
                 this.permissCate = "subCate";
-                axios.get(`api/subcate-by-cate/${res.data.category_id}`).then(res => {                    
-                    this.optionSubCates = res.data;
-                }).catch((err)=>console.log(err.response));
-                
+                axios
+                    .get(`api/subcate-by-cate/${res.data.category_id}`)
+                    .then(res => {
+                        this.optionSubCates = res.data;
+                    })
+                    .catch(err => console.log(err.response));
             }
         });
     },
 
     methods: {
         changImage(e) {
+            this.images = [];
             let selectedFiles = e.target.files;
             if (!selectedFiles.length) {
                 return false;
@@ -233,6 +238,7 @@ export default {
             }
         },
         changFile(e) {
+            this.files = [];
             let selectedFiles = e.target.files;
             if (!selectedFiles.length) {
                 return false;
@@ -265,28 +271,34 @@ export default {
                 time_show: fixTime,
                 detail: CKEDITOR.instances.detail.getData()
             };
-            console.log(data)
-            axios
-                .post("content", data)
-                .then(res => {
-                    console.log(res);
-                    this.uploadImage(res.data.id);
-                    this.uploadFile(res.data.id);
-                    this.$swal.fire({
-                        position: "center-center",
-                        icon: "success",
-                        title: "สำเร็จ",
-                        showConfirmButton: false,
-                        timer: 1000
+            if (this.images.length == 0 ) {
+                this.$swal.fire(
+                        "ไม่สำเร็จ!",
+                        "กรุณาเลือกรูป",
+                        "error"
+                    );
+            } else {
+                axios
+                    .post("content", data)
+                    .then(async res => {
+                        console.log(res);
+                        await this.uploadImage(res.data.id);
+                        await this.uploadFile(res.data.id);
+                        this.$swal.fire({
+                            position: "center-center",
+                            icon: "success",
+                            title: "สำเร็จ",
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+                        window.location.href = "/";
+                    })
+                    .catch(error => {
+                        this.error = error.response.data.errors;
+                        console.log(error.response);
                     });
-                    window.location.href = "/";
-                })
-                .catch(error => {
-                    this.error = error.response.data.errors;
-                    console.log(error.response);
-                });
+            }
         },
-
         uploadImage(content_id) {
             for (let i = 0; i < this.images.length; i++) {
                 this.formImg.append("images[]", this.images[i]);
@@ -304,8 +316,8 @@ export default {
                 .then(response => {
                     console.log(response.data);
                 })
-                .catch(response => {
-                    //error
+                .catch(err => {
+                    console.log(err.response);
                 });
         },
         uploadFile(content_id) {

@@ -41,19 +41,27 @@
                                                 :autoplayHoverPause="true"
                                                 :loop="true"
                                                 :autoplayTimeout="3000"
-                                            >                                                
+                                            >
                                                 <slide
-                                                    v-for="(newImgContent,index) in newImgContents"
+                                                    v-for="(newImgContent,
+                                                    index) in newImgContents"
                                                     :key="index"
-                                                    v-if="newContent.id == newImgContent.id_content"
+                                                    v-if="
+                                                        newContent.id ==
+                                                            newImgContent.id_content
+                                                    "
                                                 >
-                                                    <img                                                        
+                                                    <img
                                                         alt=""
                                                         class="img-fluid"
                                                         width="100%"
-                                                        :src="'storage/'+newImgContent.url"
+                                                        :src="
+                                                            'storage/' +
+                                                                newImgContent.url
+                                                        "
                                                     />
-                                                </slide>                                                
+                                                </slide>
+                                                
                                             </carousel>
                                         </a>
                                     </div>
