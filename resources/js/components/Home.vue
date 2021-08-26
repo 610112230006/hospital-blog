@@ -39,22 +39,21 @@
                                                 :paginationEnabled="false"
                                                 :navigationEnabled="true"
                                                 :autoplayHoverPause="true"
-                                                style="wi:100%"
-                                            >
-                                                <div
-                                                    v-for="newImgContent in newImgContents"
+                                                :loop="true"
+                                                :autoplayTimeout="3000"
+                                            >                                                
+                                                <slide
+                                                    v-for="(newImgContent,index) in newImgContents"
+                                                    :key="index"
+                                                    v-if="newContent.id == newImgContent.id_content"
                                                 >
-                                                    <slide>
-                                                        <img
-                                                            v-if="
-                                                                newImgContent.id_content ==
-                                                                    newContent.id
-                                                            "
-                                                            alt=""
-                                                            src="storage/contents/2021-08/xSsK0gmcirySFKqAp8waawTx49xPtxxDhQjgUNCd.jpg"
-                                                        />
-                                                    </slide>
-                                                </div>
+                                                    <img                                                        
+                                                        alt=""
+                                                        class="img-fluid"
+                                                        width="100%"
+                                                        :src="'storage/'+newImgContent.url"
+                                                    />
+                                                </slide>                                                
                                             </carousel>
                                         </a>
                                     </div>
@@ -238,9 +237,11 @@ export default {
     },
     mounted() {
         axios.get("api/cont-new-home").then(res => {
+            console.log(res.data);
             this.newContents = res.data;
         });
         axios.get("api/cont-img-new-home").then(res => {
+            console.log(res.data);
             this.newImgContents = res.data;
         });
     }

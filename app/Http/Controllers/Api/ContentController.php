@@ -36,23 +36,33 @@ class ContentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    { 
-        
+    {
+        $validated = $request->validate(
+            [
+                'title' => 'required',
+                'type' => 'required',
+                'detail' => 'required',
+            ],
+            [
+                'title.required' => 'กรุณากรอกหัวเรื่อง',
+                'type.required' => 'กรุณาเลือกหมวดหมู่',
+                'detail.required' => 'กรุณากรอกรายละเอียด',
+            ]
+        );
+
         if ($request->time_show == '') {
             $time_show = date('Y-m-d');
-        } else{
+        } else {
             $time_show = $request->time_show;
-        }   
-            $qry =  Content::create([
-                'user_id' => Auth::id(),
-                'title' => $request->title,
-                'type' => $request->type,
-                'time_show' => $time_show,
-                'detail' => $request->detail,            
-            ]);
-            return response()->json($qry);
-        
-        
+        }
+        $qry =  Content::create([
+            'user_id' => Auth::id(),
+            'title' => $request->title,
+            'type' => $request->type,
+            'time_show' => $time_show,
+            'detail' => $request->detail,
+        ]);
+        return response()->json($qry);
     }
 
     /**

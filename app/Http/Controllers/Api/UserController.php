@@ -38,6 +38,19 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'email' => 'required|unique:users,email',
+            'password' => 'required',
+            'f_name' => 'required',
+            'l_name' => 'required',
+        ], [
+            'email.unique' => 'Email นี้ได้ใช้ไปแล้ว',
+            'email.required' => 'กรุณากรอก email',
+            'password.required' => 'กรุณากรอก password',
+            'f_name.required' => 'กรุณากรอกชื่อจริง',
+            'l_name.required' => 'กรุณากรอกนามสกุล',
+        ]);
+
         User::create([            
             'f_name' => $request->f_name,
             'l_name' => $request->l_name,

@@ -30,8 +30,12 @@
                                     v-model="content.title"
                                     type="text"
                                     class="form-control"
-                                    name="username"
+                                    name="title"
+                                    :class="{ 'is-invalid': error.title }"
                                 />
+                                <div v-if="error.title" class="is-invalid">
+                                    {{ error.title[0] }}
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="exampleFormControlInput1"
@@ -41,6 +45,7 @@
                                     class="form-select"
                                     id="cars"
                                     v-model="content.type"
+                                    :class="{ 'is-invalid': error.type }"
                                 >
                                     <optgroup
                                         v-for="(optionCate,
@@ -65,6 +70,9 @@
                                         </option>
                                     </optgroup>
                                 </select>
+                                <div v-if="error.type" class="is-invalid">
+                                    {{ error.type[0] }}
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="exampleFormControlInput1"
@@ -95,17 +103,23 @@
                                     type="file"
                                     class="form-control"
                                     multiple
-                                    accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf"
                                     id="upload-file"
                                     @change="changFile"
                                 />
+                                <div v-if="errorFile.file" class="is-invalid">
+                                    {{ errorFile.file }}
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="">รายระเอียด</label>
                                 <textarea
                                     name="detail"
                                     class="form-control"
+                                    :class="{ 'is-invalid': error.type }"
                                 ></textarea>
+                                <div v-if="error.detail" class="is-invalid">
+                                    {{ error.detail[0] }}
+                                </div>
                             </div>
                             <div class="form-check">
                                 <input
@@ -163,7 +177,9 @@ export default {
             formImg: new FormData(),
             formFile: new FormData(),
             images: [],
-            files: []
+            files: [],
+            error: [],
+            errorFile: []
         };
     },
     mounted() {
@@ -182,7 +198,18 @@ export default {
             if (!selectedFiles.length) {
                 return false;
             }
+
             for (let i = 0; i < selectedFiles.length; i++) {
+                if (selectedFiles[i].size > 2 * 1024 * 1024) {
+                    this.$swal.fire(
+                        "ไม่สำเร็จ!",
+                        "ไฟล์ขนาดใหญ่เกินไป (สูงสุด 2 MB!)",
+                        "error"
+                    );                    
+                    e.target.files = null;
+                    this.selectedFiles = null;
+                    break;
+                }
                 this.images.push(selectedFiles[i]);
             }
         },
@@ -192,10 +219,21 @@ export default {
                 return false;
             }
             for (let i = 0; i < selectedFiles.length; i++) {
+                if (selectedFiles[i].size > 2 * 1024 * 1024) {
+                    this.$swal.fire(
+                        "ไม่สำเร็จ!",
+                        "ไฟล์ขนาดใหญ่เกินไป (สูงสุด 2 MB!)",
+                        "error"
+                    );
+                    e.target.files = null;
+                    this.selectedFiles = null;
+                    break;
+                }
                 this.files.push(selectedFiles[i]);
             }
         },
         uploadContent() {
+            this.error = [];
             let fixTime;
             if (this.showAllTime) {
                 fixTime = "";
@@ -209,19 +247,25 @@ export default {
                 detail: CKEDITOR.instances.detail.getData()
             };
             // console.log(data)
-            axios.post("content", data).then(res => {
-                console.log(res.data);
-                this.uploadImage(res.data.id);
-                this.uploadFile(res.data.id);
-                this.$swal.fire({
-                    position: "center-center",
-                    icon: "success",
-                    title: "สำเร็จ",
-                    showConfirmButton: false,
-                    timer: 1000
+            axios
+                .post("content", data)
+                .then(res => {
+                    console.log(res);
+                    this.uploadImage(res.data.id);
+                    this.uploadFile(res.data.id);
+                    this.$swal.fire({
+                        position: "center-center",
+                        icon: "success",
+                        title: "สำเร็จ",
+                        showConfirmButton: false,
+                        timer: 1000
+                    });
+                    window.location.href = "/";
+                })
+                .catch(error => {
+                    this.error = error.response.data.errors;
+                    console.log(error.response.data.errors);
                 });
-                // window.location.href = "/";
-            });
         },
 
         uploadImage(content_id) {
@@ -239,7 +283,7 @@ export default {
                     config
                 )
                 .then(response => {
-                    console.log(response.data)
+                    console.log(response.data);
                 })
                 .catch(response => {
                     //error
@@ -262,8 +306,9 @@ export default {
                 .then(response => {
                     //success
                 })
-                .catch(response => {
-                    //error
+                .catch(error => {
+                    // this.errorFile = error.response.data.error;
+                    
                 });
         }
     }

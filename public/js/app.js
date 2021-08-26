@@ -1880,6 +1880,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
 
 /***/ }),
@@ -2048,6 +2049,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {},
   data: function data() {
@@ -2059,7 +2074,9 @@ __webpack_require__.r(__webpack_exports__);
       formImg: new FormData(),
       formFile: new FormData(),
       images: [],
-      files: []
+      files: [],
+      error: [],
+      errorFile: []
     };
   },
   mounted: function mounted() {
@@ -2082,6 +2099,13 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       for (var i = 0; i < selectedFiles.length; i++) {
+        if (selectedFiles[i].size > 2 * 1024 * 1024) {
+          this.$swal.fire("ไม่สำเร็จ!", "ไฟล์ขนาดใหญ่เกินไป (สูงสุด 2 MB!)", "error");
+          e.target.files = null;
+          this.selectedFiles = null;
+          break;
+        }
+
         this.images.push(selectedFiles[i]);
       }
     },
@@ -2093,12 +2117,20 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       for (var i = 0; i < selectedFiles.length; i++) {
+        if (selectedFiles[i].size > 2 * 1024 * 1024) {
+          this.$swal.fire("ไม่สำเร็จ!", "ไฟล์ขนาดใหญ่เกินไป (สูงสุด 2 MB!)", "error");
+          e.target.files = null;
+          this.selectedFiles = null;
+          break;
+        }
+
         this.files.push(selectedFiles[i]);
       }
     },
     uploadContent: function uploadContent() {
       var _this2 = this;
 
+      this.error = [];
       var fixTime;
 
       if (this.showAllTime) {
@@ -2115,7 +2147,7 @@ __webpack_require__.r(__webpack_exports__);
       }; // console.log(data)
 
       axios.post("content", data).then(function (res) {
-        console.log(res.data);
+        console.log(res);
 
         _this2.uploadImage(res.data.id);
 
@@ -2127,8 +2159,12 @@ __webpack_require__.r(__webpack_exports__);
           title: "สำเร็จ",
           showConfirmButton: false,
           timer: 1000
-        }); // window.location.href = "/";
+        });
 
+        window.location.href = "/";
+      })["catch"](function (error) {
+        _this2.error = error.response.data.errors;
+        console.log(error.response.data.errors);
       });
     },
     uploadImage: function uploadImage(content_id) {
@@ -2159,7 +2195,7 @@ __webpack_require__.r(__webpack_exports__);
       };
       document.getElementById("upload-file").value = [];
       axios.post("api/upload-file?content_id=".concat(content_id), this.formFile, config).then(function (response) {//success
-      })["catch"](function (response) {//error
+      })["catch"](function (error) {// this.errorFile = error.response.data.error;
       });
     }
   }
@@ -2285,6 +2321,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2294,14 +2332,15 @@ __webpack_require__.r(__webpack_exports__);
         f_name: "",
         l_name: "",
         category_id: "0"
-      }
+      },
+      error: []
     };
   },
   methods: {
     AddForm: function AddForm() {
       var _this = this;
 
-      axios.post('api/user', this.form).then(function (response) {
+      axios.post("api/user", this.form).then(function (response) {
         _this.$swal.fire({
           position: "center-center",
           icon: "success",
@@ -2312,7 +2351,7 @@ __webpack_require__.r(__webpack_exports__);
 
         window.location.href = "user";
       })["catch"](function (err) {
-        return console.log(err);
+        _this.error = err.response.data.errors;
       });
     }
   }
@@ -2595,7 +2634,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2607,9 +2645,11 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get("api/cont-new-home").then(function (res) {
+      console.log(res.data);
       _this.newContents = res.data;
     });
     axios.get("api/cont-img-new-home").then(function (res) {
+      console.log(res.data);
       _this.newImgContents = res.data;
     });
   }
@@ -39527,7 +39567,12 @@ var render = function() {
         "carousel",
         {
           staticStyle: { wi: "100%" },
-          attrs: { perPage: 1, autoplay: true, navigationEnabled: true }
+          attrs: {
+            perPage: 1,
+            loop: true,
+            autoplay: true,
+            navigationEnabled: true
+          }
         },
         [
           _c("slide", [
@@ -39615,7 +39660,8 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control",
-                  attrs: { type: "text", name: "username" },
+                  class: { "is-invalid": _vm.error.title },
+                  attrs: { type: "text", name: "title" },
                   domProps: { value: _vm.content.title },
                   on: {
                     input: function($event) {
@@ -39625,7 +39671,17 @@ var render = function() {
                       _vm.$set(_vm.content, "title", $event.target.value)
                     }
                   }
-                })
+                }),
+                _vm._v(" "),
+                _vm.error.title
+                  ? _c("div", { staticClass: "is-invalid" }, [
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(_vm.error.title[0]) +
+                          "\n                            "
+                      )
+                    ])
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
@@ -39645,6 +39701,7 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-select",
+                    class: { "is-invalid": _vm.error.type },
                     attrs: { id: "cars" },
                     on: {
                       change: function($event) {
@@ -39697,7 +39754,17 @@ var render = function() {
                     )
                   }),
                   0
-                )
+                ),
+                _vm._v(" "),
+                _vm.error.type
+                  ? _c("div", { staticClass: "is-invalid" }, [
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(_vm.error.type[0]) +
+                          "\n                            "
+                      )
+                    ])
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
@@ -39724,18 +39791,40 @@ var render = function() {
                 _vm._v(" "),
                 _c("input", {
                   staticClass: "form-control",
-                  attrs: {
-                    type: "file",
-                    multiple: "",
-                    accept:
-                      "application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf",
-                    id: "upload-file"
-                  },
+                  attrs: { type: "file", multiple: "", id: "upload-file" },
                   on: { change: _vm.changFile }
-                })
+                }),
+                _vm._v(" "),
+                _vm.errorFile.file
+                  ? _c("div", { staticClass: "is-invalid" }, [
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(_vm.errorFile.file) +
+                          "\n                            "
+                      )
+                    ])
+                  : _vm._e()
               ]),
               _vm._v(" "),
-              _vm._m(1),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "" } }, [_vm._v("รายระเอียด")]),
+                _vm._v(" "),
+                _c("textarea", {
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.error.type },
+                  attrs: { name: "detail" }
+                }),
+                _vm._v(" "),
+                _vm.error.detail
+                  ? _c("div", { staticClass: "is-invalid" }, [
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(_vm.error.detail[0]) +
+                          "\n                            "
+                      )
+                    ])
+                  : _vm._e()
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-check" }, [
                 _c("input", {
@@ -39882,16 +39971,6 @@ var staticRenderFns = [
         ])
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "" } }, [_vm._v("รายระเอียด")]),
-      _vm._v(" "),
-      _c("textarea", { staticClass: "form-control", attrs: { name: "detail" } })
-    ])
   }
 ]
 render._withStripped = true
@@ -39945,6 +40024,7 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
+                    class: { "is-invalid": _vm.error.email },
                     attrs: {
                       type: "email",
                       name: "email",
@@ -39959,7 +40039,13 @@ var render = function() {
                         _vm.$set(_vm.form, "email", $event.target.value)
                       }
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _vm.error.email
+                    ? _c("div", { staticClass: "is-invalid" }, [
+                        _vm._v(_vm._s(_vm.error.email[0]))
+                      ])
+                    : _vm._e()
                 ])
               ]),
               _vm._v(" "),
@@ -40266,38 +40352,36 @@ var render = function() {
                                 _c(
                                   "carousel",
                                   {
-                                    staticStyle: { wi: "100%" },
                                     attrs: {
                                       perPage: 1,
                                       autoplay: true,
                                       paginationEnabled: false,
                                       navigationEnabled: true,
-                                      autoplayHoverPause: true
+                                      autoplayHoverPause: true,
+                                      loop: true,
+                                      autoplayTimeout: 3000
                                     }
                                   },
                                   _vm._l(_vm.newImgContents, function(
-                                    newImgContent
+                                    newImgContent,
+                                    index
                                   ) {
-                                    return _c(
-                                      "div",
-                                      [
-                                        _c("slide", [
-                                          newImgContent.id_content ==
-                                          newContent.id
-                                            ? _c("img", {
-                                                attrs: {
-                                                  alt: "",
-                                                  src:
-                                                    "storage/contents/2021-08/xSsK0gmcirySFKqAp8waawTx49xPtxxDhQjgUNCd.jpg"
-                                                }
-                                              })
-                                            : _vm._e()
+                                    return newContent.id ==
+                                      newImgContent.id_content
+                                      ? _c("slide", { key: index }, [
+                                          _c("img", {
+                                            staticClass: "img-fluid",
+                                            attrs: {
+                                              alt: "",
+                                              width: "100%",
+                                              src:
+                                                "storage/" + newImgContent.url
+                                            }
+                                          })
                                         ])
-                                      ],
-                                      1
-                                    )
+                                      : _vm._e()
                                   }),
-                                  0
+                                  1
                                 )
                               ],
                               1

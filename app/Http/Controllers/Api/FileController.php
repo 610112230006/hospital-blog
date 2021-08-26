@@ -13,32 +13,41 @@ class FileController extends Controller
         if ($request->images) {
             $uploadedFiles = $request->images;
             foreach ($uploadedFiles as $file) {
+                $pathFile = 'content/' . date('Y-m');
+                $file_name = time() . '_' . $file->getClientOriginalName();
+                $file_path = $file->storeAs($pathFile, $file_name, 'public');
 
-                $pathFile = 'public/contents/' . date('Y-m');
-                $namepath = $file->store($pathFile);
+
                 $resFile = FileUpload::create([
                     'id_content' => $_GET['content_id'],
                     'type' => 'image',
-                    'url' => $namepath,
+                    'url' => $file_path,
                 ]);
                 // echo $file;
             }
-            return response()->json(['status' => 'ok','name' => $namepath],200);
+            return response()->json(['status' => 'ok', 'name' => $file_path], 200);
         }
         return;
     }
     public function uploadFile(Request $request)
     {
+        // $validate = $request->validate([
+        //     'file' => 'mimes:doc,pdf,xlsx,xls,docx,ppt,zip|size:20000',
+        // ], [
+        //     'file.mimes' => 'ต้องเป็นไฟล์ประเภท "doc,pdf,xlsx,xls,docx,ppt,zip"',
+        //     'file.size' => 'ไฟล์ขนาดใหญ่เกินไป'
+        // ]);
         if ($request->file) {
             $uploadedFiles = $request->file;
             foreach ($uploadedFiles as $file) {
 
-                $pathFile = 'contents/' . date('Y-m');
-                $namepath = $file->store($pathFile);
+                $pathFile = 'content/' . date('Y-m');
+                $file_name = time() . '_' . $file->getClientOriginalName();
+                $file_path = $file->storeAs($pathFile, $file_name, 'public');
                 $resFile = FileUpload::create([
                     'id_content' => $_GET['content_id'],
                     'type' => 'file',
-                    'url' => $namepath,
+                    'url' => $file_path,
                 ]);
                 // echo $file;
             }

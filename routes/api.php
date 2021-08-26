@@ -20,12 +20,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    // return $request->user();
-    return response()->json('555');
-});
+// Route::get('/user', function (Request $request) {
+//     // return $request->user();
+//     return response()->json('555');
+// });
 
-// Route::resource('user', UserController::class);
+Route::resource('user', UserController::class);
 Route::resource('category', CategoryController::class);
 Route::resource('sub-category', SubCategoryController::class);
 // Route::resource('content', ContentController::class);

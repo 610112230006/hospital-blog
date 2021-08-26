@@ -17,8 +17,10 @@ class ShowController extends Controller
     public function ShowImgNew()
     {
         $img = DB::table('contents')
-        ->join('file_uploads', 'contents.id', '=', 'file_uploads.id_content')        
-        ->select('file_uploads.*')
+        ->join('file_uploads', function ($join) {
+            $join->on('contents.id', '=', 'file_uploads.id_content')
+                 ->where('file_uploads.type', '=', 'image');
+        })
         ->get();
         return response()->json($img);
     }

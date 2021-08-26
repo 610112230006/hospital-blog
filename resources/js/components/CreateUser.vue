@@ -14,12 +14,14 @@
                                 >
                                 <div class="col-10">
                                     <input
+                                        :class="{'is-invalid' : error.email}"
                                         class="form-control"
                                         type="email"
                                         name="email"
                                         v-model="form.email"
                                         id="example-email-input"
                                     />
+                                <div v-if="error.email" class="is-invalid">{{error.email[0]}}</div>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -115,13 +117,14 @@ export default {
                 f_name: "",
                 l_name: "",
                 category_id: "0"
-            }
+            },
+            error: []
         };
     },
     methods: {
-        AddForm() {            
+        AddForm() {
             axios
-                .post('api/user', this.form)
+                .post("api/user", this.form)
                 .then(response => {
                     this.$swal.fire({
                         position: "center-center",
@@ -131,9 +134,10 @@ export default {
                         timer: 1000
                     });
                     window.location.href = "user";
-
                 })
-                .catch(err => console.log(err));
+                .catch(err => {
+                    this.error = err.response.data.errors;
+                });
         }
     }
 };

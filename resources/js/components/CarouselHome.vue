@@ -2,6 +2,7 @@
     <div>
         <carousel
             :perPage="1"
+            :loop="true"
             :autoplay="true"
             :navigationEnabled="true"
             style="wi:100%"

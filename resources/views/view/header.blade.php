@@ -5,7 +5,7 @@
                 <ul class="top-menu">
                     <li>
                         <a>โทรศัพท์ 0-2590-6157 , 0-2590-6159/ E-mail
-                            : team.winai2020@gamil.com</a>
+                            : team.winai2020@gmail.com</a>
                         
                     </li>
 

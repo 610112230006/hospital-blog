@@ -27,12 +27,7 @@
     <div class="body-inner">
         <div id="app">
             @include('view.header')
-
-
-
             @yield('content')
-
-
             @include('view.footer')
 
         </div>
