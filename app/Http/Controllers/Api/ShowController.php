@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Content;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -19,6 +20,11 @@ class ShowController extends Controller
     {
         $category = Category::get();        
         return response()->json($category);        
+    }
+    public function ShowSubCateByCate($id)
+    {   
+        $subcate = SubCategory::where('category_id','=',$id)->get();
+        return response()->json($subcate);        
     }
     public function ShowImgNew()
     {

@@ -35,6 +35,7 @@ Route::post('upload-file', [FileController::class,'uploadFile']);
 // Show
 Route::get('cont-new-home',[ShowController::class,'ShowNew']);
 Route::get('cont-img-new-home',[ShowController::class,'ShowImgNew']);
+Route::get('subcate-by-cate/{id}',[ShowController::class,'ShowSubCateByCate']);
 // Route::get('getAllCate',[ShowController::class,'ShowCateMageUser']);
 
 

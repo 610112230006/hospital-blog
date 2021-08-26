@@ -2063,6 +2063,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {},
   data: function data() {
@@ -2076,18 +2082,31 @@ __webpack_require__.r(__webpack_exports__);
       images: [],
       files: [],
       error: [],
-      errorFile: []
+      errorFile: [],
+      permissCate: ""
     };
   },
   mounted: function mounted() {
     var _this = this;
 
     CKEDITOR.replace("detail");
-    axios.get("api/category").then(function (res) {
-      _this.optionCates = res.data;
-    });
-    axios.get("api/sub-category").then(function (res) {
-      _this.optionSubCates = res.data;
+    axios.get("auth-user").then(function (res) {
+      if (res.data.category_id == "0") {
+        _this.permissCate = "cate";
+        axios.get("api/category").then(function (res) {
+          _this.optionCates = res.data;
+        });
+        axios.get("api/sub-category").then(function (res) {
+          _this.optionSubCates = res.data;
+        });
+      } else {
+        _this.permissCate = "subCate";
+        axios.get("api/subcate-by-cate/".concat(res.data.category_id)).then(function (res) {
+          _this.optionSubCates = res.data;
+        })["catch"](function (err) {
+          return console.log(err.response);
+        });
+      }
     });
   },
   methods: {
@@ -2144,8 +2163,8 @@ __webpack_require__.r(__webpack_exports__);
         type: this.content.type,
         time_show: fixTime,
         detail: CKEDITOR.instances.detail.getData()
-      }; // console.log(data)
-
+      };
+      console.log(data);
       axios.post("content", data).then(function (res) {
         console.log(res);
 
@@ -2164,7 +2183,7 @@ __webpack_require__.r(__webpack_exports__);
         window.location.href = "/";
       })["catch"](function (error) {
         _this2.error = error.response.data.errors;
-        console.log(error.response.data.errors);
+        console.log(error.response);
       });
     },
     uploadImage: function uploadImage(content_id) {
@@ -39710,72 +39729,111 @@ var render = function() {
                   _vm._v("หมวดหมู่")
                 ]),
                 _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
+                _vm.permissCate == "cate"
+                  ? _c(
+                      "select",
                       {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.content.type,
-                        expression: "content.type"
-                      }
-                    ],
-                    staticClass: "form-select",
-                    class: { "is-invalid": _vm.error.type },
-                    attrs: { id: "cars" },
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.content,
-                          "type",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      }
-                    }
-                  },
-                  _vm._l(_vm.optionCates, function(optionCate, indexCate) {
-                    return _c(
-                      "optgroup",
-                      { key: indexCate, attrs: { label: optionCate.name } },
-                      _vm._l(_vm.optionSubCates, function(
-                        optionSubCate,
-                        indexSub
-                      ) {
-                        return _c(
-                          "option",
+                        directives: [
                           {
-                            key: indexSub,
-                            domProps: { value: optionSubCate.id }
-                          },
-                          [
-                            optionSubCate.category_id == optionCate.id
-                              ? _c("div", [
-                                  _vm._v(
-                                    "\n                                            " +
-                                      _vm._s(optionSubCate.name) +
-                                      "\n                                        "
-                                  )
-                                ])
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.content.type,
+                            expression: "content.type"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.content,
+                              "type",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      _vm._l(_vm.optionCates, function(optionCate) {
+                        return _c(
+                          "optgroup",
+                          { attrs: { label: optionCate.name } },
+                          _vm._l(_vm.optionSubCates, function(optionSubCate) {
+                            return optionSubCate.category_id == optionCate.id
+                              ? _c(
+                                  "option",
+                                  { domProps: { value: optionSubCate.id } },
+                                  [
+                                    _vm._v(
+                                      "\n                                        " +
+                                        _vm._s(optionSubCate.name) +
+                                        "\n                                    "
+                                    )
+                                  ]
+                                )
                               : _vm._e()
-                          ]
+                          }),
+                          0
                         )
                       }),
                       0
                     )
-                  }),
-                  0
-                ),
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.permissCate == "subCate"
+                  ? _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.content.type,
+                            expression: "content.type"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.content,
+                              "type",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      _vm._l(_vm.optionSubCates, function(
+                        optionSubCate,
+                        index
+                      ) {
+                        return _c(
+                          "option",
+                          { key: index, domProps: { value: optionSubCate.id } },
+                          [_vm._v(_vm._s(optionSubCate.name))]
+                        )
+                      }),
+                      0
+                    )
+                  : _vm._e(),
                 _vm._v(" "),
                 _vm.error.type
                   ? _c("div", { staticClass: "is-invalid" }, [

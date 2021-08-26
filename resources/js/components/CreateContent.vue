@@ -42,33 +42,39 @@
                                     >หมวดหมู่</label
                                 >
                                 <select
-                                    class="form-select"
-                                    id="cars"
+                                    v-if="permissCate == 'cate'"
+                                    class="form-control"
                                     v-model="content.type"
-                                    :class="{ 'is-invalid': error.type }"
                                 >
                                     <optgroup
-                                        v-for="(optionCate,
-                                        indexCate) in optionCates"
-                                        :key="indexCate"
+                                        v-for="optionCate in optionCates"
                                         :label="optionCate.name"
                                     >
                                         <option
-                                            v-for="(optionSubCate,
-                                            indexSub) in optionSubCates"
-                                            :key="indexSub"
+                                            v-for="optionSubCate in optionSubCates"
+                                            v-if="
+                                                optionSubCate.category_id ==
+                                                    optionCate.id
+                                            "
                                             :value="optionSubCate.id"
                                         >
-                                            <div
-                                                v-if="
-                                                    optionSubCate.category_id ==
-                                                        optionCate.id
-                                                "
-                                            >
-                                                {{ optionSubCate.name }}
-                                            </div>
+                                            {{ optionSubCate.name }}
                                         </option>
                                     </optgroup>
+                                </select>
+
+                                <select
+                                    v-if="permissCate == 'subCate'"
+                                    class="form-control"
+                                    v-model="content.type"
+                                >
+                                    <option
+                                        v-for="(optionSubCate,
+                                        index) in optionSubCates"
+                                        :key="index"
+                                        :value="optionSubCate.id"
+                                        >{{ optionSubCate.name }}</option
+                                    >
                                 </select>
                                 <div v-if="error.type" class="is-invalid">
                                     {{ error.type[0] }}
@@ -179,16 +185,29 @@ export default {
             images: [],
             files: [],
             error: [],
-            errorFile: []
+            errorFile: [],
+            permissCate: ""
         };
     },
     mounted() {
         CKEDITOR.replace("detail");
-        axios.get("api/category").then(res => {
-            this.optionCates = res.data;
-        });
-        axios.get("api/sub-category").then(res => {
-            this.optionSubCates = res.data;
+        axios.get("auth-user").then(res => {
+            
+            if (res.data.category_id == "0") {
+                this.permissCate = "cate";
+                axios.get("api/category").then(res => {
+                    this.optionCates = res.data;
+                });
+                axios.get("api/sub-category").then(res => {
+                    this.optionSubCates = res.data;
+                });
+            } else {
+                this.permissCate = "subCate";
+                axios.get(`api/subcate-by-cate/${res.data.category_id}`).then(res => {                    
+                    this.optionSubCates = res.data;
+                }).catch((err)=>console.log(err.response));
+                
+            }
         });
     },
 
@@ -205,7 +224,7 @@ export default {
                         "ไม่สำเร็จ!",
                         "ไฟล์ขนาดใหญ่เกินไป (สูงสุด 2 MB!)",
                         "error"
-                    );                    
+                    );
                     e.target.files = null;
                     this.selectedFiles = null;
                     break;
@@ -246,7 +265,7 @@ export default {
                 time_show: fixTime,
                 detail: CKEDITOR.instances.detail.getData()
             };
-            // console.log(data)
+            console.log(data)
             axios
                 .post("content", data)
                 .then(res => {
@@ -264,7 +283,7 @@ export default {
                 })
                 .catch(error => {
                     this.error = error.response.data.errors;
-                    console.log(error.response.data.errors);
+                    console.log(error.response);
                 });
         },
 
@@ -308,7 +327,6 @@ export default {
                 })
                 .catch(error => {
                     // this.errorFile = error.response.data.error;
-                    
                 });
         }
     }

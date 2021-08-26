@@ -20,6 +20,11 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::get('/auth-user', function () {
+    return response()->json(Auth::user());
+});
+
+
 Route::get('/user', function () {
     return view('pages.admin.user.manage-user');
 });
