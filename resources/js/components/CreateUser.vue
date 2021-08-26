@@ -14,14 +14,16 @@
                                 >
                                 <div class="col-10">
                                     <input
-                                        :class="{'is-invalid' : error.email}"
+                                        :class="{ 'is-invalid': error.email }"
                                         class="form-control"
                                         type="email"
                                         name="email"
                                         v-model="form.email"
                                         id="example-email-input"
                                     />
-                                <div v-if="error.email" class="is-invalid">{{error.email[0]}}</div>
+                                    <div v-if="error.email" class="is-invalid">
+                                        {{ error.email[0] }}
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -88,6 +90,14 @@
                                         <option selected value="0"
                                             >ทุกหมวดหมู่</option
                                         >
+                                        <option
+                                            v-for="(optionCate,
+                                            index) in optionCates"
+                                            :key="index"
+                                            :value="optionCate.id"
+                                        >
+                                        {{optionCate.name}}
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -118,8 +128,20 @@ export default {
                 l_name: "",
                 category_id: "0"
             },
+            optionCates: [],
             error: []
         };
+    },
+    mounted() {
+        axios
+            .get("api/category")
+            .then(res => {
+                console.log(res.data);
+                this.optionCates = res.data;
+            })
+            .catch(err => {
+                console.log(err.response.data);
+            });
     },
     methods: {
         AddForm() {

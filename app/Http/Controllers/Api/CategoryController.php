@@ -15,7 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {   
-        $category =  Category::get();        
+        $category =  Category::where('id','!=','0')->get();        
         return response()->json($category);
     }
 

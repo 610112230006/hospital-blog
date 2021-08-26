@@ -55,7 +55,7 @@
                                         <td>{{ user.f_name }}</td>
                                         <td>{{ user.l_name }}</td>
                                         <td>{{ user.email }}</td>
-                                        <td>{{ user.category_id }}</td>
+                                        <td>{{ user.name }}</td>
                                         <td>
                                             <a href="">
                                                 <i class="icon-edit">

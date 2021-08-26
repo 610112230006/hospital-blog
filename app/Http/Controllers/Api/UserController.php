@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -15,8 +16,11 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $users = User::get();
+    {   
+        $users = DB::table('users')
+            ->join('categories', 'users.category_id', '=', 'categories.id')            
+            ->select('users.*', 'categories.name')
+            ->get();
         return response()->json($users);
     }
 

@@ -2323,6 +2323,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2333,15 +2343,26 @@ __webpack_require__.r(__webpack_exports__);
         l_name: "",
         category_id: "0"
       },
+      optionCates: [],
       error: []
     };
   },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get("api/category").then(function (res) {
+      console.log(res.data);
+      _this.optionCates = res.data;
+    })["catch"](function (err) {
+      console.log(err.response.data);
+    });
+  },
   methods: {
     AddForm: function AddForm() {
-      var _this = this;
+      var _this2 = this;
 
       axios.post("api/user", this.form).then(function (response) {
-        _this.$swal.fire({
+        _this2.$swal.fire({
           position: "center-center",
           icon: "success",
           title: "สำเร็จ",
@@ -2351,7 +2372,7 @@ __webpack_require__.r(__webpack_exports__);
 
         window.location.href = "user";
       })["catch"](function (err) {
-        _this.error = err.response.data.errors;
+        _this2.error = err.response.data.errors;
       });
     }
   }
@@ -40043,7 +40064,11 @@ var render = function() {
                   _vm._v(" "),
                   _vm.error.email
                     ? _c("div", { staticClass: "is-invalid" }, [
-                        _vm._v(_vm._s(_vm.error.email[0]))
+                        _vm._v(
+                          "\n                                    " +
+                            _vm._s(_vm.error.email[0]) +
+                            "\n                                "
+                        )
                       ])
                     : _vm._e()
                 ])
@@ -40213,8 +40238,23 @@ var render = function() {
                     [
                       _c("option", { attrs: { selected: "", value: "0" } }, [
                         _vm._v("ทุกหมวดหมู่")
-                      ])
-                    ]
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.optionCates, function(optionCate, index) {
+                        return _c(
+                          "option",
+                          { key: index, domProps: { value: optionCate.id } },
+                          [
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(optionCate.name) +
+                                "\n                                    "
+                            )
+                          ]
+                        )
+                      })
+                    ],
+                    2
                   )
                 ])
               ]),
@@ -41119,7 +41159,7 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(user.email))]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(user.category_id))]),
+                      _c("td", [_vm._v(_vm._s(user.name))]),
                       _vm._v(" "),
                       _c("td", [
                         _vm._m(3, true),
