@@ -34,8 +34,11 @@ Route::post('upload-file', [FileController::class,'uploadFile']);
 
 // Show
 Route::get('cont-new-home',[ShowController::class,'ShowNew']);
-Route::get('cont-img-new-home',[ShowController::class,'ShowImgNew']);
+Route::get('get-all-image',[ShowController::class,'ShowImgNew']);
 Route::get('subcate-by-cate/{id}',[ShowController::class,'ShowSubCateByCate']);
+Route::get('content-all-by-create',[ShowController::class,'ShowContentAllByCreate']);
+Route::get('content-by-user/{user_id}',[ShowController::class,'ShowContentByUser']);
+Route::get('get-image-by-user/{user_id}',[ShowController::class,'ShowImageByUser']);
 // Route::get('getAllCate',[ShowController::class,'ShowCateMageUser']);
 
 

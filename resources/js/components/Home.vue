@@ -248,7 +248,7 @@ export default {
             console.log(res.data);
             this.newContents = res.data;
         });
-        axios.get("api/cont-img-new-home").then(res => {
+        axios.get("api/get-all-image").then(res => {
             console.log(res.data);
             this.newImgContents = res.data;
         });

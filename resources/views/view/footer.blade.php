@@ -43,7 +43,7 @@
                                         
                                     </li>
                                     <li>
-                                        <a >จัดการข่าวสาร</a>
+                                        <a href="{{ url('manage-content', []) }}">จัดการข่าวสาร</a>
                                         
                                     </li>
                                     <li>
@@ -88,9 +88,7 @@
     <div class="copyright-content">
         <div class="container">
             <div class="copyright-text text-center">
-                &copy; 2021 POLO - Responsive Multi-Purpose HTML5
-                Template. All Rights Reserved.<a href="https://www.inspiro-media.com" target="_blank" rel="noopener">
-                    INSPIRO</a>
+                &copy; 2021 By Dr.comp - Responsive Multi-Purpose HTML5 Laravel VueJs                
             </div>
         </div>
     </div>

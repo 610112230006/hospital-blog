@@ -34,6 +34,9 @@ Route::get('/user-create', function () {
 Route::get('/content-create', function () {
     return view('pages.content.create-content');
 });
+Route::get('/manage-content', function () {
+    return view('pages.content.manage-content');
+});
 Route::get('/manage-category', function () {
     return view('pages.admin.category.manage-category');
 });
