@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Content;
+use App\Models\FileUpload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ContentController extends Controller
 {
@@ -107,6 +109,13 @@ class ContentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $res = Content::find($id)->delete();
+        $delFiles = FileUpload::where('id_content', '=', $id)->get();
+        foreach($delFiles as $delFile){
+            Storage::disk('public')->delete($delFile->url);
+        }
+        $delFiles = FileUpload::where('id_content', '=', $id)->delete();
+       
+        return response()->json('ok');
     }
 }

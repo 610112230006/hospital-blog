@@ -25,5 +25,5 @@
     </div>
 </section>
 
-<createuser-component/>
+<createuser-component></createuser-component>
 @endsection

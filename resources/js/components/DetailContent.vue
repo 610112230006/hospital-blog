@@ -23,7 +23,7 @@
                                             :autoplayHoverPause="true"
                                             :loop="true"
                                             :autoplayTimeout="3000"
-                                        >
+                                        >                                            
                                             <slide
                                                 v-for="(image, index) in images"
                                                 :key="index"
@@ -53,7 +53,10 @@
                                                 </button>
                                                 <button
                                                     type="button"
-                                                    class="btn btn-primary"
+                                                    class="btn btn-danger"
+                                                    @click="
+                                                        delContent(content.id)
+                                                    "
                                                 >
                                                     ลบ
                                                 </button>
@@ -82,6 +85,7 @@
                             </div>
                             <!-- end: Post single item-->
                         </div>
+
                     </div>
                     <!-- end: content -->
                     <!-- Sidebar-->
@@ -513,34 +517,46 @@ export default {
             checkAuth: false
         };
     },
+    created() {},
     mounted() {
         this.fetchData();
-        axios.get("auth-user").then(res => {
-            if (res.data.id == null) {
-                this.checkAuth = false;
-            } else {
-                if (res.data.type == "admin") {
-                    this.checkAuth = true;
-                } else if (res.data.type == "user") {
-                    if (this.content.user_id == res.data.id) {
-                        this.checkAuth = true;
-                    } else {
-                        this.checkAuth = false;
-                    }
-                }
-            }
-            console.log(this.checkAuth);
-        });
     },
     methods: {
         fetchData() {
             axios.get(`api/get-content-by-id/${this.id_content}`).then(res => {
+                let content = res.data[0];
                 this.content = res.data[0];
+                axios.get("auth-user").then(res => {
+                    if (res.data.id == null) {
+                        this.checkAuth = false;
+                    } else {
+                        if (res.data.type == "admin") {
+                            this.checkAuth = true;
+                        } else if (res.data.type == "user") {
+                            if (content.user_id == res.data.id) {
+                                this.checkAuth = true;
+                            } else {
+                                this.checkAuth = false;
+                            }
+                        }
+                    }
+                });
             });
             axios
                 .get(`api/get-image-by-idContent/${this.id_content}`)
                 .then(res => {
                     this.images = res.data;
+                });
+        },
+        delContent(id_content) {
+            axios
+                .get(`delete-content/${id_content}`)
+                .then(res => {
+                    console.log(res.data);
+                    window.location.href = "/";
+                })
+                .catch(err => {
+                    console.log(err.response);
                 });
         }
     }

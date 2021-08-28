@@ -256,7 +256,7 @@ export default {
             newImgContents: []
         };
     },
-    mounted() {
+    created() {
         axios.get("api/cont-new-home").then(res => {
             console.log(res.data);
             this.newContents = res.data;
@@ -265,7 +265,9 @@ export default {
             console.log(res.data);
             this.newImgContents = res.data;
         });
-    }
+    },
+
+    mounted() {}
 };
 </script>
 <style lang=""></style>
