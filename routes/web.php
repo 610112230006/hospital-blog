@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\ContentController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\DetailController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -37,9 +38,13 @@ Route::get('/content-create', function () {
 Route::get('/manage-content', function () {
     return view('pages.content.manage-content');
 });
+
+Route::get('/detail-content',[DetailController::class,'show_detail']);
+
 Route::get('/manage-category', function () {
     return view('pages.admin.category.manage-category');
 });
+
 Route::post('/content',[ContentController::class, 'store']);
 
 Auth::routes();

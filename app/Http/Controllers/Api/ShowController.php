@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Content;
+use App\Models\FileUpload;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -56,7 +57,24 @@ class ShowController extends Controller
             ON 
                 contents.id = file_uploads.id_content
         WHERE
-            users.id = ?',[$id_user]);
+            users.id = ?', [$id_user]);
         return response()->json($img);
+    }
+    public function ShowContentById($id_content)
+    {
+        $data = DB::select('SELECT contents.*, users.f_name, users.l_name FROM contents 
+                            INNER JOIN
+                                users
+                            ON 
+                                contents.user_id = users.id
+                            WHERE
+                                contents.id = ?
+                            LIMIT 1', [$id_content]);
+        return response()->json($data);
+    }
+    public function ShowImageByIdContent($id_content)
+    {
+        $data = FileUpload::where('id_content', '=', $id_content)->get();
+        return response()->json($data);
     }
 }

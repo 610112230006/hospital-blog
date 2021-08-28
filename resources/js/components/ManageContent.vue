@@ -35,7 +35,12 @@
                             >
                                 <div class="post-item-wrap">
                                     <div class="post-image">
-                                        <a href="#">
+                                        <a
+                                            :href="
+                                                '/detail-content?id_content=' +
+                                                    showContent.id
+                                            "
+                                        >
                                             <carousel
                                                 :perPage="1"
                                                 :autoplay="true"
@@ -73,12 +78,23 @@
                                             21, 2017</span
                                         >
                                         <h2>
-                                            <a href="#"
+                                            <a
+                                                href="javascript:void(0)"
+                                                v-on:click="
+                                                    toDetailContent(
+                                                        showContent.id
+                                                    )
+                                                "
                                                 >{{ showContent.title }}
                                             </a>
                                         </h2>
 
-                                        <a href="#" class="item-link"
+                                        <a
+                                            href="javascript:void(0)"
+                                            v-on:click="
+                                                toDetailContent(showContent.id)
+                                            "
+                                            class="item-link"
                                             >อ่านต่อ...
                                             <i class="icon-chevron-right"></i
                                         ></a>
@@ -114,6 +130,11 @@ export default {
         });
     },
     methods: {
+        // toDetailContent(id_content) {
+        //     let route =
+        //         '{{ url("detail-content", ["id_content" => "?anytagtoreplace?"]) }}';
+        //     location.href = route.replace("?anytagtoreplace?", id_content);
+        // },
         // permiss Admin
         getContentAll() {
             axios.get("api/content-all-by-create").then(res => {
