@@ -40,12 +40,32 @@
                                         </carousel>
                                     </div>
                                     <div class="post-item-description">
-                                        <h2>{{ content.title }}</h2>
+                                        <div
+                                            class="d-flex justify-content-between"
+                                        >
+                                            <h2>{{ content.title }}</h2>
+                                            <div v-if="checkAuth">
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-primary"
+                                                >
+                                                    อัพเดท
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-primary"
+                                                >
+                                                    ลบ
+                                                </button>
+                                            </div>
+                                        </div>
                                         <div class="post-meta">
                                             <span class="post-meta-date"
                                                 ><i class="icon-clock"></i
-                                                >{{`เขียนเมื่อ ${content.created_at}, `}}</span
-                                            >                                            
+                                                >{{
+                                                    `เขียนเมื่อ ${content.created_at}, `
+                                                }}</span
+                                            >
                                             <span class="post-meta-comments"
                                                 ><i class="icon-user"></i>
                                                 {{
@@ -489,17 +509,40 @@ export default {
     data() {
         return {
             content: {},
-            images: []
+            images: [],
+            checkAuth: false
         };
     },
     mounted() {
-        axios.get(`api/get-content-by-id/${this.id_content}`).then(res => {
-            this.content = res.data[0];
+        this.fetchData();
+        axios.get("auth-user").then(res => {
+            if (res.data.id == null) {
+                this.checkAuth = false;
+            } else {
+                if (res.data.type == "admin") {
+                    this.checkAuth = true;
+                } else if (res.data.type == "user") {
+                    if (this.content.user_id == res.data.id) {
+                        this.checkAuth = true;
+                    } else {
+                        this.checkAuth = false;
+                    }
+                }
+            }
+            console.log(this.checkAuth);
         });
-        axios.get(`api/get-image-by-idContent/${this.id_content}`).then(res => {
-            this.images = res.data;
-            console.log(this.images);
-        });
+    },
+    methods: {
+        fetchData() {
+            axios.get(`api/get-content-by-id/${this.id_content}`).then(res => {
+                this.content = res.data[0];
+            });
+            axios
+                .get(`api/get-image-by-idContent/${this.id_content}`)
+                .then(res => {
+                    this.images = res.data;
+                });
+        }
     }
 };
 </script>

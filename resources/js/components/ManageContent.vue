@@ -79,20 +79,18 @@
                                         >
                                         <h2>
                                             <a
-                                                href="javascript:void(0)"
-                                                v-on:click="
-                                                    toDetailContent(
+                                                :href="
+                                                    '/detail-content?id_content=' +
                                                         showContent.id
-                                                    )
                                                 "
                                                 >{{ showContent.title }}
                                             </a>
                                         </h2>
 
                                         <a
-                                            href="javascript:void(0)"
-                                            v-on:click="
-                                                toDetailContent(showContent.id)
+                                            :href="
+                                                '/detail-content?id_content=' +
+                                                    showContent.id
                                             "
                                             class="item-link"
                                             >อ่านต่อ...

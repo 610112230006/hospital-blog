@@ -32,7 +32,12 @@
                             >
                                 <div class="post-item-wrap">
                                     <div class="post-image">
-                                        <a href="#">
+                                        <a
+                                            :href="
+                                                '/detail-content?id_content=' +
+                                                    newContent.id
+                                            "
+                                        >
                                             <carousel
                                                 :perPage="1"
                                                 :autoplay="true"
@@ -61,7 +66,6 @@
                                                         "
                                                     />
                                                 </slide>
-                                                
                                             </carousel>
                                         </a>
                                     </div>
@@ -71,12 +75,21 @@
                                             21, 2017</span
                                         >
                                         <h2>
-                                            <a href="#"
+                                            <a
+                                                :href="
+                                                    '/detail-content?id_content=' +
+                                                        newContent.id
+                                                "
                                                 >{{ newContent.title }}
                                             </a>
                                         </h2>
 
-                                        <a href="#" class="item-link"
+                                        <a
+                                            :href="
+                                                '/detail-content?id_content=' +
+                                                    newContent.id
+                                            "
+                                            class="item-link"
                                             >อ่านต่อ...
                                             <i class="icon-chevron-right"></i
                                         ></a>

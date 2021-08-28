@@ -2944,24 +2944,68 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["id_content"],
   data: function data() {
     return {
       content: {},
-      images: []
+      images: [],
+      checkAuth: false
     };
   },
   mounted: function mounted() {
     var _this = this;
 
-    axios.get("api/get-content-by-id/".concat(this.id_content)).then(function (res) {
-      _this.content = res.data[0];
+    this.fetchData();
+    axios.get("auth-user").then(function (res) {
+      if (res.data.id == null) {
+        _this.checkAuth = false;
+      } else {
+        if (res.data.type == "admin") {
+          _this.checkAuth = true;
+        } else if (res.data.type == "user") {
+          if (_this.content.user_id == res.data.id) {
+            _this.checkAuth = true;
+          } else {
+            _this.checkAuth = false;
+          }
+        }
+      }
+
+      console.log(_this.checkAuth);
     });
-    axios.get("api/get-image-by-idContent/".concat(this.id_content)).then(function (res) {
-      _this.images = res.data;
-      console.log(_this.images);
-    });
+  },
+  methods: {
+    fetchData: function fetchData() {
+      var _this2 = this;
+
+      axios.get("api/get-content-by-id/".concat(this.id_content)).then(function (res) {
+        _this2.content = res.data[0];
+      });
+      axios.get("api/get-image-by-idContent/".concat(this.id_content)).then(function (res) {
+        _this2.images = res.data;
+      });
+    }
   }
 });
 
@@ -3013,6 +3057,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3652,8 +3709,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
-//
 //
 //
 //
@@ -42106,7 +42161,43 @@ var render = function() {
                           ),
                           _vm._v(" "),
                           _c("div", { staticClass: "post-item-description" }, [
-                            _c("h2", [_vm._v(_vm._s(_vm.content.title))]),
+                            _c(
+                              "div",
+                              { staticClass: "d-flex justify-content-between" },
+                              [
+                                _c("h2", [_vm._v(_vm._s(_vm.content.title))]),
+                                _vm._v(" "),
+                                _vm.checkAuth
+                                  ? _c("div", [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-primary",
+                                          attrs: { type: "button" }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                อัพเดท\n                                            "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-primary",
+                                          attrs: { type: "button" }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                ลบ\n                                            "
+                                          )
+                                        ]
+                                      )
+                                    ])
+                                  : _vm._e()
+                              ]
+                            ),
                             _vm._v(" "),
                             _c("div", { staticClass: "post-meta" }, [
                               _c("span", { staticClass: "post-meta-date" }, [
@@ -42806,7 +42897,13 @@ var render = function() {
                           _c("div", { staticClass: "post-image" }, [
                             _c(
                               "a",
-                              { attrs: { href: "#" } },
+                              {
+                                attrs: {
+                                  href:
+                                    "/detail-content?id_content=" +
+                                    newContent.id
+                                }
+                              },
                               [
                                 _c(
                                   "carousel",
@@ -42851,15 +42948,41 @@ var render = function() {
                             _vm._m(1, true),
                             _vm._v(" "),
                             _c("h2", [
-                              _c("a", { attrs: { href: "#" } }, [
-                                _vm._v(
-                                  _vm._s(newContent.title) +
-                                    "\n                                        "
-                                )
-                              ])
+                              _c(
+                                "a",
+                                {
+                                  attrs: {
+                                    href:
+                                      "/detail-content?id_content=" +
+                                      newContent.id
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(newContent.title) +
+                                      "\n                                        "
+                                  )
+                                ]
+                              )
                             ]),
                             _vm._v(" "),
-                            _vm._m(2, true)
+                            _c(
+                              "a",
+                              {
+                                staticClass: "item-link",
+                                attrs: {
+                                  href:
+                                    "/detail-content?id_content=" +
+                                    newContent.id
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "อ่านต่อ...\n                                        "
+                                ),
+                                _c("i", { staticClass: "icon-chevron-right" })
+                              ]
+                            )
                           ])
                         ])
                       ])
@@ -42868,7 +42991,7 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
-                _vm._m(3)
+                _vm._m(2)
               ]
             )
           ]
@@ -42905,15 +43028,6 @@ var staticRenderFns = [
     return _c("span", { staticClass: "post-meta-date" }, [
       _c("i", { staticClass: "fa fa-calendar-o" }),
       _vm._v("Jan\n                                        21, 2017")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { staticClass: "item-link", attrs: { href: "#" } }, [
-      _vm._v("อ่านต่อ...\n                                        "),
-      _c("i", { staticClass: "icon-chevron-right" })
     ])
   },
   function() {
@@ -43616,11 +43730,9 @@ var render = function() {
                         _c(
                           "a",
                           {
-                            attrs: { href: "javascript:void(0)" },
-                            on: {
-                              click: function($event) {
-                                return _vm.toDetailContent(showContent.id)
-                              }
+                            attrs: {
+                              href:
+                                "/detail-content?id_content=" + showContent.id
                             }
                           },
                           [
@@ -43636,11 +43748,8 @@ var render = function() {
                         "a",
                         {
                           staticClass: "item-link",
-                          attrs: { href: "javascript:void(0)" },
-                          on: {
-                            click: function($event) {
-                              return _vm.toDetailContent(showContent.id)
-                            }
+                          attrs: {
+                            href: "/detail-content?id_content=" + showContent.id
                           }
                         },
                         [

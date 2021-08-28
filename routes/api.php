@@ -41,6 +41,7 @@ Route::get('content-by-user/{user_id}',[ShowController::class,'ShowContentByUser
 Route::get('get-image-by-user/{user_id}',[ShowController::class,'ShowImageByUser']);
 Route::get('get-content-by-id/{id_content}',[ShowController::class,'ShowContentById']);
 Route::get('get-image-by-idContent/{id_content}',[ShowController::class,'ShowImageByIdContent']);
+Route::post('check-permiss-detail-content',[ShowController::class,'CheckPermissDetailContent']);
 // Route::get('getAllCate',[ShowController::class,'ShowCateMageUser']);
 
 
