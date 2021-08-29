@@ -18,6 +18,7 @@ class UserController extends Controller
     public function index()
     {   
         $users = DB::table('users')
+            ->where('type','!=','admin')
             ->join('categories', 'users.category_id', '=', 'categories.id')            
             ->select('users.*', 'categories.name')
             ->get();
@@ -73,7 +74,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = User::find($id);
+        return response()->json($data);
     }
 
     /**
@@ -84,7 +86,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
@@ -96,7 +98,13 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = User::find($id)->update([
+            'f_name' => $request->f_name,
+            'l_name' => $request->l_name,
+            'email' => $request->email,            
+            'category_id' => $request->category_id,
+        ]);
+        return response()->json($data);
     }
 
     /**

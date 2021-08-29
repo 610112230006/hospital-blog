@@ -29,6 +29,11 @@ Route::get('/auth-user', function () {
 Route::get('/user', function () {
     return view('pages.admin.user.manage-user');
 });
+Route::get('/edit-user', function () {
+    if (isset($_GET['id_user'])) {        
+        return view('pages.admin.user.edit-user')->with('id_user', $_GET['id_user']);        
+    }
+});
 Route::get('/user-create', function () {
     return view('pages.admin.user.create-user');
 });

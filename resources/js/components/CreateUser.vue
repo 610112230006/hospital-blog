@@ -102,7 +102,7 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <a class="btn btn-white">ยกเลิก</a>
+                                <a href="javascript:history.back()" class="btn btn-white">ยกเลิก</a>
                                 <button
                                     @click.prevent="AddForm"
                                     class="btn btn-primary"

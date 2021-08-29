@@ -57,7 +57,7 @@
                                         <td>{{ user.email }}</td>
                                         <td>{{ user.name }}</td>
                                         <td>
-                                            <a href="">
+                                            <a :href="`/edit-user?id_user=${user.id}`">
                                                 <i class="icon-edit">
                                                     แก้ไข
                                                 </i>
@@ -106,7 +106,7 @@ export default {
             this.$swal
                 .fire({
                     title: "คุณต้องการลบ บัญชีผู้ใช้นี้จริง ๆ หรือไม่?",
-                    text: "ข้อมูลไม่สามารถกู้คืนได้ !",
+                    text: "ข้อมูลข่าวสารที่โพสข้อมูลไม่สามารถกู้คืนได้ !",
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#3085d6",
