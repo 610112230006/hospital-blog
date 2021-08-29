@@ -6,20 +6,22 @@
                 <div class="col-lg-5">
                     <div class="widget">
                         <div class="widget-title">
-                            Polo HTML5 Template
+                            กลุ่มคุ้มครองจริยธรรม กฎหมายและวินัย กรมการแพทย์
                         </div>
                         <p class="mb-5">
-                            Built with love in Fort Worth, Texas, USA<br />
-                            All rights reserved. Copyright © 2021.
-                            INSPIRO.
+                            ที่อยู่: กรมการแพทย์ กระทรวงสาธารณสุข 88/23 ถ.ติวานนท์ ต.ตลาดขวัญ อ.เมือง จ.นนทบุรี 11000
+                            <br />
+                            E-mail : team.winai2020@gmail.com
+                            <br>
+                            โทรศัพท์ : 0-2590-6157 , 0-2590-6159
+                    
                         </p>
-                        <a href="https://themeforest.net/item/polo-responsive-multipurpose-html5-template/13708923"
-                            class="btn btn-inverted" target="_blank">Purchase Now</a>
+
                     </div>
                 </div>
                 <div class="col-lg-7">
                     <div class="row">
-                        <div class="col-lg-3">
+                        {{-- <div class="col-lg-3">
                             <div class="widget">
                                 <div class="widget-title">Discover</div>
                                 <ul class="list">
@@ -31,53 +33,45 @@
                                     <li><a href="#">Customers</a></li>
                                 </ul>
                             </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="widget">
-                                <div class="widget-title">
-                                    เจ้าหน้าที่
+                        </div> --}}
+                        <div class="d-flex justify-content-end">
+                            <div class="col-lg-3">
+                                <div class="widget">
+                                    <div class="widget-title">หน่วยงานที่เกี่ยวข้อง</div>
+                                    <ul class="list">
+                                        <li><a href="https://www.dms.go.th/" target="_blank">กรมการแพทย์</a></li>
+                                        <li><a href="https://www.dmh.go.th/" target="_blank">กรมสุขภาพจิต</a></li>
+                                        <li><a href="https://anamai.moph.go.th/th" target="_blank">กรมอนามัย</a></li>
+                                        <li><a href="https://ddc.moph.go.th/" target="_blank">กรมควบคุมโรค</a></li>
+                                        <li><a href="https://ops.moph.go.th/public/" target="_blank">สำนักงานปลัดกระทรวงสาธารณสุข</a></li>
+                                    </ul>
                                 </div>
-                                <ul class="list">
-                                    <li>
-                                        <a href="{{ url('content-create', []) }}">เพิ่มข่าวสาร</a>
-                                        
-                                    </li>
-                                    <li>
-                                        <a href="{{ url('manage-content', []) }}">จัดการข่าวสาร</a>
-                                        
-                                    </li>
-                                    <li>
-                                        <a href="{{ url('user', []) }}">จัดการบัญชีผู้ใช้</a>
-                                        
-                                    </li>
-                                    <li>
-                                        <a href="{{ url('manage-category', []) }}">จัดการหมวดหมู่</a>
-                                        
-                                    </li>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="widget">
+                                    <div class="widget-title">
+                                        สำหรับเจ้าหน้าที่
+                                    </div>
+                                    <ul class="list">
+                                        <li>
+                                            <a href="{{ url('content-create', []) }}">เพิ่มข่าวสาร</a>
 
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="widget">
-                                <div class="widget-title">Pages</div>
-                                <ul class="list">
-                                    <li><a href="#">Portfolio</a></li>
-                                    <li><a href="#">Blog</a></li>
-                                    <li><a href="#">Shop</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="widget">
-                                <div class="widget-title">Support</div>
-                                <ul class="list">
-                                    <li><a href="#">Help Desk</a></li>
-                                    <li>
-                                        <a href="#">Documentation</a>
-                                    </li>
-                                    <li><a href="#">Contact Us</a></li>
-                                </ul>
+                                        </li>
+                                        <li>
+                                            <a href="{{ url('manage-content', []) }}">จัดการข่าวสาร</a>
+
+                                        </li>
+                                        <li>
+                                            <a href="{{ url('user', []) }}">จัดการบัญชีผู้ใช้</a>
+
+                                        </li>
+                                        <li>
+                                            <a href="{{ url('manage-category', []) }}">จัดการหมวดหมู่</a>
+
+                                        </li>
+
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -88,7 +82,7 @@
     <div class="copyright-content">
         <div class="container">
             <div class="copyright-text text-center">
-                &copy; 2021 By Dr.comp - Responsive Multi-Purpose HTML5 Laravel VueJs                
+                &copy; 2021 By Dr.comp - Responsive Multi-Purpose HTML5 Laravel VueJs
             </div>
         </div>
     </div>

@@ -6,7 +6,7 @@
                     <li>
                         <a>โทรศัพท์ 0-2590-6157 , 0-2590-6159/ E-mail
                             : team.winai2020@gmail.com</a>
-                        
+
                     </li>
 
                 </ul>
@@ -30,7 +30,8 @@
     <div class="header-inner">
         <div class="container">
             <!--Logo-->
-            <div id="logo"> <a href="/"><span class="logo-default"><img src="images/logos/logo-moph.png" alt="" height="60" width="100%" srcset=""></span><span class="logo-dark">POLO</span></a>
+            <div id="logo"> <a href="/"><span class="logo-default"><img src="images/logos/logo-moph.png" alt=""
+                            height="60" width="100%" srcset=""></span><span class="logo-dark">POLO</span></a>
             </div>
             <!--End: Logo-->
             <!-- Search -->
@@ -50,14 +51,14 @@
                             <a href="{{ route('login') }}"> <i class="icon-user">เข้าสู่ระบบ</i></a>
 
                         @else
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
-                            ออกจากระบบ
-                        </a>
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                         document.getElementById('logout-form').submit();">
+                                ออกจากระบบ
+                            </a>
 
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
                         @endguest
 
                     </li>
@@ -81,156 +82,48 @@
                             <li><a href="">งานวินัย/ละเมิด</a></li>
                             <li><a href="">งานคุ้มครองจริยธรรม</a></li>
                             <li><a href="">ร้องเรียน/ร้องทุก</a></li>
-                            <li><a href="">ติดต่อเรา</a></li>
+                            <li><a href="contact">ติดต่อเรา</a></li>
                             {{-- <li class="dropdown"><a href="#">Layout</a>
                                 <ul class="dropdown-menu">
-                                    <li class="dropdown-submenu"><a href="#">Topbar</a>
+                                    <li class="dropdown-submenu"><a href="#">อํานาจหน้าที่</a>
+
+                                    </li>
+                                    <li class="dropdown-submenu"><a href="#">วิสัยทัศน์ พันธกิจ</a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="header-topbar.html">Light</a></li>
-                                            <li><a href="header-topbar-dark.html">Dark</a></li>
-                                            <li><a href="header-topbar-transparent.html">Transparent</a></li>
-                                            <li><a href="header-topbar-colored.html">Colored</a></li>
-                                            <li><a href="header-topbar-fullwidth.html">Fullwidth</a></li>
+                                            <li><a href="">Light</a></li>
+                                            <li><a href="">Dark</a></li>
+                                            <li><a href="">Transparent</a></li>
+                                            <li><a href="">Colored</a></li>
+                                            <li><a href="">Fullwidth</a></li>
                                         </ul>
                                     </li>
-                                    <li class="dropdown-submenu"><a href="#">Header</a>
+                                    <li class="dropdown-submenu"><a href="#">โครงสร้างกลุ่ม</a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="header.html">Light</a></li>
-                                            <li><a href="header-dark.html">Dark</a></li>
-                                            <li><a href="header-transparent.html">Transparent</a></li>
-                                            <li><a href="header-fullwidth.html">Fullwidth</a></li>
-                                            <li class="dropdown-submenu"><a href="#">Modern</a>
-                                                <ul class="dropdown-menu">
-                                                    <li><a href="header-modern.html">Light</a></li>
-                                                    <li><a href="header-modern-dark.html">Dark</a></li>
-                                                    <li><a href="header-modern-transparent.html">Transparent</a></li>
-                                                </ul>
+                                            <li><a href="">งานกฎหมาย นิติกรรม และคดี</a></li>
+                                            <li><a href="">งานสอบสวน วินัย และความ
+                                                    รับผิดทางละเมิด
+                                                </a>
                                             </li>
-                                            <li><a href="header-mini.html">Mini</a></li>
-                                            <li><a href="header-alternative.html">Alternative</a></li>
-                                            <li><a href="header-always-fixed.html">Always Fixed</a></li>
-                                            <li><a href="header-disable-fixed.html">Disable Fixed</a></li>
-                                            <li><a href="header-responsive-fixed.html">Responsive Fixed</a></li>
-                                            <li class="dropdown-submenu"><a href="#">Logo</a>
-                                                <ul class="dropdown-menu">
-                                                    <li><a href="header-logo.html">Left</a></li>
-                                                    <li><a href="header-logo-right.html">Right</a></li>
-                                                    <li><a href="header-logo-center.html">Center</a></li>
-                                                    <li><a href="header-logo-fixed-header.html">Header Fixed Logo</a>
-                                                    </li>
-                                                    <li><a href="header-logo-responsive.html">Header Responsive Logo</a>
-                                                    </li>
-                                                </ul>
+                                            <li><a href="">งานคุ้มครองจริยธรรม</a></li>
+
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu"><a href="#">งบประมาณ</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="">โครงการ</a></li>
+                                            <li><a href="">แผนการจัดซื้อจัดจ้าง</a>
                                             </li>
-                                            <li class="dropdown-submenu"><a href="#">Menu Positions</a>
-                                                <ul class="dropdown-menu">
-                                                    <li><a href="header-menu-left.html">Left</a></li>
-                                                    <li><a href="header-menu-right.html">Right</a></li>
-                                                    <li><a href="header-menu-center.html">Center</a></li>
-                                                </ul>
-                                            </li>
+                                            <li><a href="">งานคุ้มครองจริยธรรม</a></li>
+
                                         </ul>
                                     </li>
-                                    <li class="dropdown-submenu"><a href="#">Main Menu<span
-                                                class="badge bg-danger">NEW</span></a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="menu.html">Default</a></li>
-                                            <li><a href="menu-lowercase.html">Lowercase</a></li>
-                                            <li><a href="menu-split.html">Split Menu</a></li>
-                                            <li><a href="menu-sub-title.html">Sub Title Menu</a></li>
-                                            <li><a href="menu-overlay.html">Overlay Menu</a></li>
-                                            <li><a href="menu-creative.html">Creative Menu</a></li>
-                                            <li><a href="menu-lines.html">Lines Menu</a></li>
-                                            <li class="dropdown-submenu"><a href="#">Outline</a>
-                                                <ul class="dropdown-menu">
-                                                    <li><a href="menu-outline.html">Default</a></li>
-                                                    <li><a href="menu-outline-dark.html">Dark</a></li>
-                                                    <li><a href="menu-outline-light.html">Light</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="dropdown-submenu"><a href="#">Rounded</a>
-                                                <ul class="dropdown-menu">
-                                                    <li><a href="menu-rounded.html">Default</a></li>
-                                                    <li><a href="menu-rounded-dark.html">Dark</a></li>
-                                                    <li><a href="menu-rounded-light.html">Light</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="dropdown-submenu"><a href="#">Positions</a>
-                                                <ul class="dropdown-menu">
-                                                    <li><a href="menu-left.html">Left Aligned</a></li>
-                                                    <li><a href="menu-center.html">Center Aligned</a></li>
-                                                    <li><a href="menu-right.html">Right Aligned</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="menu-dots.html">Dots Menu</a></li>
-                                            <li><a href="menu-one-page.html">One Page Menu</a></li>
-                                            <li><a href="menu-hover-background.html">Hover Background</a></li>
-                                            <li><a href="menu-button.html">Button Version</a></li>
-                                            <li><a href="menu-social-icons.html">Social Icons Version</a></li>
-                                            <li><a href="menu-onclick.html">OnClick Open</a></li>
-                                            <li><a href="menu-rounded-dropdown.html">Rounded Dropdown</a></li>
-                                        </ul>
+                                    <li class="dropdown"><a href="#">Happy DMS</a>
+                                        
                                     </li>
-                                    <li class="dropdown-submenu"><a href="#">Page Title</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="page-title.html">Default</a></li>
-                                            <li><a href="page-title-image.html">Image background</a></li>
-                                            <li><a href="page-title-video.html">Video background</a></li>
-                                            <li><a href="page-title-particle.html">Particle animation</a></li>
-                                            <li><a href="page-title-pattern.html">Pattern background</a></li>
-                                            <li><a href="page-title-background-color.html">Colored background</a></li>
-                                            <li><a href="page-title-parallax.html">Parallax</a></li>
-                                            <li><a href="page-title-animated.html">Animated</a></li>
-                                            <li><a href="page-title-right.html">Right Aligned</a></li>
-                                            <li><a href="page-title-left.html">Left Aligned</a></li>
-                                        </ul>
+                                    <li class="dropdown"><a href="#">ปฏิทินกิจกรรม</a>
+                                        
                                     </li>
-                                    <li class="dropdown-submenu"><a href="#">Page Menu<span
-                                                class="badge bg-danger">NEW</span></a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="page-menu.html">Default</a></li>
-                                            <li><a href="page-menu-sticky.html">Sticky</a></li>
-                                            <li><a href="page-menu-rounded.html">Rounded</a></li>
-                                            <li><a href="page-menu-outline.html">Outline</a></li>
-                                            <li><a href="page-menu-lines.html">Lines</a></li>
-                                            <li><a href="page-menu-solid.html">Solid</a></li>
-                                            <li><a href="page-menu-light.html">Light</a></li>
-                                            <li><a href="page-menu-dark.html">Dark</a></li>
-                                            <li><a href="page-menu-creative.html">Creative</a></li>
-                                            <li><a href="page-menu.html">Dropdown</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu"><a href="#">Sidebars</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="sidebar-sticky.html">Sticky version</a></li>
-                                            <li><a href="sidebar.html">Left aligned</a></li>
-                                            <li><a href="sidebar-right.html">Right aligned</a></li>
-                                            <li><a href="sidebar-both.html">Both Sidebars</a></li>
-                                            <li><a href="sidebar-modern.html">Modern</a></li>
-                                            <li><a href="sidebar-modern-right.html">Modern Right</a></li>
-                                            <li><a href="sidebar-modern-both.html">Modern Both Sidebars</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu"><a href="#">Footers</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="footer.html#footer">Default</a></li>
-                                            <li><a href="footer-dark.html#footer">Dark</a></li>
-                                            <li><a href="footer-1.html#footer">Footer 1</a></li>
-                                            <li><a href="footer-2.html#footer">Footer 2</a></li>
-                                            <li><a href="footer-3.html#footer">Footer 3</a></li>
-                                            <li><a href="footer-4.html#footer">Footer 4</a></li>
-                                            <li><a href="footer-5.html#footer">Footer 5</a></li>
-                                            <li><a href="footer-6.html#footer">Footer 6</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu"><a href="#">Options</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="layout-boxed.html">Boxed</a></li>
-                                            <li><a href="layout-modern.html">Modern</a></li>
-                                            <li><a href="layout-frame.html">Frame</a></li>
-                                            <li><a href="layout-wide.html">Wide (default)</a></li>
-                                        </ul>
-                                    </li>
+
                                 </ul>
                             </li> --}}
 

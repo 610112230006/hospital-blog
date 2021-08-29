@@ -38,6 +38,9 @@ Route::get('/content-create', function () {
 Route::get('/manage-content', function () {
     return view('pages.content.manage-content');
 });
+Route::get('/contact', function () {
+    return view('pages.contact');
+});
 Route::get('/delete-content/{id_content}', [ContentController::class, 'destroy']);
 Route::get('/edit-content', [ContentController::class, 'edit']);
 
