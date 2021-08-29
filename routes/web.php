@@ -38,16 +38,17 @@ Route::get('/content-create', function () {
 Route::get('/manage-content', function () {
     return view('pages.content.manage-content');
 });
-Route::get('/delete-content/{id_content}',[ContentController::class,'destroy']);
+Route::get('/delete-content/{id_content}', [ContentController::class, 'destroy']);
+Route::get('/edit-content', [ContentController::class, 'edit']);
 
-
-Route::get('/detail-content',[DetailController::class,'show_detail']);
+Route::get('/detail-content', [DetailController::class, 'show_detail']);
 
 Route::get('/manage-category', function () {
     return view('pages.admin.category.manage-category');
 });
 
-Route::post('/content',[ContentController::class, 'store']);
+Route::post('/content', [ContentController::class, 'store']);
+Route::post('/update-content/{id_content}', [ContentController::class, 'update']);
 
 Auth::routes();
 

@@ -9,6 +9,7 @@ use App\Models\FileUpload;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ShowController extends Controller
 {
@@ -82,5 +83,19 @@ class ShowController extends Controller
         $id_user = $request->id_user;
         $id_content = $request->id_content;
         return response()->json();
+    }
+    public function DelOneImage($id_file)
+    {
+        $data = FileUpload::find($id_file);
+        Storage::disk('public')->delete($data->url);
+        $data->delete();
+        return response()->json($data);
+    }
+    public function DelOneFile($id_file)
+    {
+        $data = FileUpload::find($id_file);
+        Storage::disk('public')->delete($data->url);
+        $data->delete();
+        return response()->json($data);
     }
 }

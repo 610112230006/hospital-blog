@@ -84,9 +84,11 @@ class ContentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+        if (isset($_GET['id_content'])) {
+            return view('pages.content.edit-content')->with('id_content', $_GET['id_content']);
+        }
     }
 
     /**
@@ -98,7 +100,25 @@ class ContentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validated = $request->validate(
+            [
+                'title' => 'required',
+                'type' => 'required',
+                'detail' => 'required',
+            ],
+            [
+                'title.required' => 'กรุณากรอกหัวเรื่อง',
+                'type.required' => 'กรุณาเลือกหมวดหมู่',
+                'detail.required' => 'กรุณากรอกรายละเอียด',
+            ]
+        );
+        $res = Content::find($id)->update([
+            'title' => $request->title,
+            'type' => $request->type,
+            'time_show' => $request->time_show,
+            'detail' => $request->detail,
+        ]);
+        return response()->json(['req' => $res, 'id' => $id]);
     }
 
     /**
@@ -111,11 +131,11 @@ class ContentController extends Controller
     {
         $res = Content::find($id)->delete();
         $delFiles = FileUpload::where('id_content', '=', $id)->get();
-        foreach($delFiles as $delFile){
+        foreach ($delFiles as $delFile) {
             Storage::disk('public')->delete($delFile->url);
         }
         $delFiles = FileUpload::where('id_content', '=', $id)->delete();
-       
+
         return response()->json('ok');
     }
 }

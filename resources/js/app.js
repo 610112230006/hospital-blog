@@ -17,6 +17,7 @@ Vue.component('carouselhome-component', require('./components/CarouselHome.vue')
 Vue.component('home-component', require('./components/Home.vue').default);
 Vue.component('managecontent-component', require('./components/ManageContent.vue').default);
 Vue.component('detailcontent-component', require('./components/DetailContent.vue').default);
+Vue.component('editcontent-component', require('./components/EditContent.vue').default);
 
 
 const app = new Vue({

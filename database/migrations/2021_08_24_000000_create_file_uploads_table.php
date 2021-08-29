@@ -17,6 +17,7 @@ class CreateFileUploadsTable extends Migration
             $table->id();
             $table->string('id_content');
             $table->string('type');
+            $table->string('name');
             $table->string('url');
             $table->timestamps();
         });

@@ -45,12 +45,13 @@
                                         >
                                             <h2>{{ content.title }}</h2>
                                             <div v-if="checkAuth">
-                                                <button
+                                                <a
+                                                    :href="`edit-content?id_content=${content.id}`"
                                                     type="button"
                                                     class="btn btn-primary"
                                                 >
                                                     อัพเดท
-                                                </button>
+                                                </a>
                                                 <button
                                                     type="button"
                                                     class="btn btn-danger"

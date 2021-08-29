@@ -32,6 +32,7 @@ Route::resource('sub-category', SubCategoryController::class);
 Route::post('upload-image', [FileController::class,'uploadImg']);
 Route::post('upload-file', [FileController::class,'uploadFile']);
 
+
 // Show
 Route::get('cont-new-home',[ShowController::class,'ShowNew']);
 Route::get('get-all-image',[ShowController::class,'ShowImgNew']);
@@ -42,6 +43,8 @@ Route::get('get-image-by-user/{user_id}',[ShowController::class,'ShowImageByUser
 Route::get('get-content-by-id/{id_content}',[ShowController::class,'ShowContentById']);
 Route::get('get-image-by-idContent/{id_content}',[ShowController::class,'ShowImageByIdContent']);
 Route::post('check-permiss-detail-content',[ShowController::class,'CheckPermissDetailContent']);
-// Route::get('getAllCate',[ShowController::class,'ShowCateMageUser']);
+Route::get('del-one-image/{id_file}',[ShowController::class,'DelOneImage']);
+Route::get('del-one-file/{id_file}',[ShowController::class,'DelOneFile']);
+
 
 

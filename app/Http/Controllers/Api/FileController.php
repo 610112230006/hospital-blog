@@ -13,6 +13,7 @@ class FileController extends Controller
         if ($request->images) {
             $uploadedFiles = $request->images;
             foreach ($uploadedFiles as $file) {
+                $name = $file->getClientOriginalName();
                 $pathFile = 'content/' . date('Y-m');
                 $file_name = time() . '_' . $file->getClientOriginalName();
                 $file_path = $file->storeAs($pathFile, $file_name, 'public');
@@ -22,6 +23,7 @@ class FileController extends Controller
                     'id_content' => $_GET['content_id'],
                     'type' => 'image',
                     'url' => $file_path,
+                    'name' => $name
                 ]);
                 // echo $file;
             }
@@ -31,16 +33,11 @@ class FileController extends Controller
     }
     public function uploadFile(Request $request)
     {
-        // $validate = $request->validate([
-        //     'file' => 'mimes:doc,pdf,xlsx,xls,docx,ppt,zip|size:20000',
-        // ], [
-        //     'file.mimes' => 'ต้องเป็นไฟล์ประเภท "doc,pdf,xlsx,xls,docx,ppt,zip"',
-        //     'file.size' => 'ไฟล์ขนาดใหญ่เกินไป'
-        // ]);
+
         if ($request->file) {
             $uploadedFiles = $request->file;
             foreach ($uploadedFiles as $file) {
-
+                $name = $file->getClientOriginalName();
                 $pathFile = 'content/' . date('Y-m');
                 $file_name = time() . '_' . $file->getClientOriginalName();
                 $file_path = $file->storeAs($pathFile, $file_name, 'public');
@@ -48,6 +45,7 @@ class FileController extends Controller
                     'id_content' => $_GET['content_id'],
                     'type' => 'file',
                     'url' => $file_path,
+                    'name' => $name,
                 ]);
                 // echo $file;
             }
@@ -55,4 +53,5 @@ class FileController extends Controller
         }
         return;
     }
+    
 }
