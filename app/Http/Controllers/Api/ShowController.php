@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Content;
 use App\Models\FileUpload;
 use App\Models\SubCategory;
+use Illuminate\Http\Client\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -77,9 +78,9 @@ class ShowController extends Controller
     {
         $data = FileUpload::where('id_content', '=', $id_content)->get();
         return response()->json($data);
-    }
+    }   
     public function CheckPermissDetailContent(Request $request)
-    {   
+    {
         $id_user = $request->id_user;
         $id_content = $request->id_content;
         return response()->json();
