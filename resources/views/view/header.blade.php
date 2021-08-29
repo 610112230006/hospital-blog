@@ -46,24 +46,42 @@
             <!--Header Extras-->
             <div class="header-extras">
                 <ul>
+                    @guest
                     <li>
-                        @guest
-                            <a href="{{ route('login') }}"> <i class="icon-user">เข้าสู่ระบบ</i></a>
-
-                        @else
-                            <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                         document.getElementById('logout-form').submit();">
-                                ออกจากระบบ
-                            </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        @endguest
+                        
+                            <a href="{{ route('login') }}"> <i class="icon-log-in"></i></a>
+                                              
 
                     </li>
+                    @else
+                    <div class="p-dropdown">
+                        <a class="btn btn-light btn-shadow btn-rounded btn-icon"><i class="icon-user"></i></a>
+                        <div class="p-dropdown-content">
+                            <div class="widget-myaccount">
+                                <div class="d-block">
+                                    <img class="avatar avatar-lg" src="images/avatar.jpeg">
+                                </div>
+                                <span>{{ Auth::user()->f_name }}&nbsp;{{ Auth::user()->l_name }}</span>
+                                <ul class="text-center">
+                                    <li><a href="user-edit-personal"><i class="icon-user"></i>แก้ไขข้อมูลส่วนตัว</a></li>
+                                    <li><a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            <i class="icon-log-out"></i>Sing Out</a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                            class="d-none">
+                                            @csrf
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    @endguest
+
 
                 </ul>
+
+
             </div>
             <!--end: Header Extras-->
             <!--Navigation Resposnive Trigger-->

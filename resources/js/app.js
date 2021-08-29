@@ -19,6 +19,7 @@ Vue.component('managecontent-component', require('./components/ManageContent.vue
 Vue.component('detailcontent-component', require('./components/DetailContent.vue').default);
 Vue.component('editcontent-component', require('./components/EditContent.vue').default);
 Vue.component('edituser-component', require('./components/EditUser.vue').default);
+Vue.component('usereditpersonal-component', require('./components/UserEditPersonal.vue').default);
 
 
 const app = new Vue({

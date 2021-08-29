@@ -45,13 +45,14 @@ class UserController extends Controller
     {
         $request->validate([
             'email' => 'required|unique:users,email',
-            'password' => 'required',
+            'password' => 'required|min:8',
             'f_name' => 'required',
             'l_name' => 'required',
         ], [
             'email.unique' => 'Email นี้ได้ใช้ไปแล้ว',
             'email.required' => 'กรุณากรอก email',
             'password.required' => 'กรุณากรอก password',
+            'password.min' => 'password ต้องมากกว่า 8 ตำแหน่ง',
             'f_name.required' => 'กรุณากรอกชื่อจริง',
             'l_name.required' => 'กรุณากรอกนามสกุล',
         ]);
@@ -98,6 +99,13 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'f_name' => 'required',
+            'l_name' => 'required',
+        ], [
+            'f_name.required' => 'กรุณากรอกชื่อจริง',
+            'l_name.required' => 'กรุณากรอกนามสกุล',
+        ]);
         $data = User::find($id)->update([
             'f_name' => $request->f_name,
             'l_name' => $request->l_name,

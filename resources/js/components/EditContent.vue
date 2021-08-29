@@ -203,7 +203,7 @@
                                     <div v-if="error.detail" class="is-invalid">
                                         {{ error.detail[0] }}
                                     </div>
-                                </div>                                
+                                </div>
                                 <div class="form-group row">
                                     <label
                                         for="example-date-input"
@@ -221,7 +221,10 @@
                                     </div>
                                 </div>
 
-                                <button @click.prevent="uploadContent" class="btn btn-primary">
+                                <button
+                                    @click.prevent="uploadContent"
+                                    class="btn btn-primary"
+                                >
                                     อัพเดทข่าวสาร
                                 </button>
                             </form>
@@ -414,7 +417,7 @@ export default {
         },
         uploadContent() {
             this.error = [];
-          
+
             let data = {
                 title: this.content.title,
                 type: this.content.type,
@@ -427,7 +430,7 @@ export default {
                 axios
                     .post(`update-content/${this.id_content}`, data)
                     .then(res => {
-                        console.log(res.data)
+                        console.log(res.data);
                         const id_content = res.data.id;
 
                         for (let i = 0; i < this.images.length; i++) {
@@ -465,14 +468,17 @@ export default {
                                         config
                                     )
                                     .then(response => {
-                                        this.$swal.fire({
-                                            position: "center-center",
-                                            icon: "success",
-                                            title: "สำเร็จ",
-                                            showConfirmButton: false,
-                                            timer: 1000
-                                        });
-                                        window.location.href = "/";
+                                        this.$swal
+                                            .fire({
+                                                position: "center-center",
+                                                icon: "success",
+                                                title: "สำเร็จ",
+                                                showConfirmButton: false,
+                                                timer: 1000
+                                            })
+                                            .then(() => {
+                                                window.location.href = "/";
+                                            });
                                     })
                                     .catch(error => {
                                         this.errorFile =

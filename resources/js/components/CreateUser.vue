@@ -34,12 +34,19 @@
                                 >
                                 <div class="col-10">
                                     <input
+                                        :class="{ 'is-invalid': error.password }"
                                         class="form-control"
                                         v-model="form.password"
                                         type="text"
                                         name="password"
                                         id="example-text-input"
                                     />
+                                    <div
+                                        v-if="error.password"
+                                        class="is-invalid"
+                                    >
+                                        {{ error.password[0] }}
+                                    </div>
                                 </div>
                             </div>
 
@@ -51,12 +58,16 @@
                                 >
                                 <div class="col-10">
                                     <input
+                                        :class="{ 'is-invalid': error.f_name }"
                                         class="form-control"
                                         type="text"
                                         name="f_name"
                                         v-model="form.f_name"
                                         id="example-text-input"
                                     />
+                                    <div v-if="error.f_name" class="is-invalid">
+                                        {{ error.f_name[0] }}
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -67,12 +78,16 @@
                                 >
                                 <div class="col-10">
                                     <input
+                                        :class="{ 'is-invalid': error.l_name }"
                                         class="form-control"
                                         type="text"
                                         name="l_name"
                                         v-model="form.l_name"
                                         id="example-text-input"
                                     />
+                                    <div v-if="error.l_name" class="is-invalid">
+                                        {{ error.l_name[0] }}
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -96,13 +111,17 @@
                                             :key="index"
                                             :value="optionCate.id"
                                         >
-                                        {{optionCate.name}}
+                                            {{ optionCate.name }}
                                         </option>
                                     </select>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <a href="javascript:history.back()" class="btn btn-white">ยกเลิก</a>
+                                <a
+                                    href="javascript:history.back()"
+                                    class="btn btn-white"
+                                    >ยกเลิก</a
+                                >
                                 <button
                                     @click.prevent="AddForm"
                                     class="btn btn-primary"
@@ -148,14 +167,17 @@ export default {
             axios
                 .post("api/user", this.form)
                 .then(response => {
-                    this.$swal.fire({
-                        position: "center-center",
-                        icon: "success",
-                        title: "สำเร็จ",
-                        showConfirmButton: false,
-                        timer: 1000
-                    });
-                    window.location.href = "user";
+                    this.$swal
+                        .fire({
+                            position: "center-center",
+                            icon: "success",
+                            title: "สำเร็จ",
+                            showConfirmButton: false,
+                            timer: 1000
+                        })
+                        .then(() => {
+                            window.location.href = "user";
+                        });
                 })
                 .catch(err => {
                     this.error = err.response.data.errors;

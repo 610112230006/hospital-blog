@@ -37,6 +37,9 @@ Route::get('/edit-user', function () {
 Route::get('/user-create', function () {
     return view('pages.admin.user.create-user');
 });
+Route::get('/user-edit-personal', function () {
+    return view('pages.user-edit-personal');
+});
 Route::get('/content-create', function () {
     return view('pages.content.create-content');
 });

@@ -109,7 +109,7 @@
                                         <p>
                                             เพิ่มไฟล์
                                         </p>
-                                        <p class="text-danger">
+                                        <p>
                                             *ขนาดของไฟล์ใหม่: 20เมกะไบต์
                                         </p>
                                     </div>
@@ -120,6 +120,7 @@
                                     multiple
                                     id="upload-file"
                                     @change="changFile"
+                                    accept=".doc,.docx,.zip,.xlsx,.xls,.pdf,.xls,.pptx,.ppt,.txt"
                                 />
                                 <div v-if="errorFile.file" class="is-invalid">
                                     {{ errorFile.file }}
@@ -323,14 +324,17 @@ export default {
                                         config
                                     )
                                     .then(response => {
-                                        this.$swal.fire({
-                                            position: "center-center",
-                                            icon: "success",
-                                            title: "สำเร็จ",
-                                            showConfirmButton: false,
-                                            timer: 1000
-                                        });
-                                        window.location.href = "/";
+                                        this.$swal
+                                            .fire({
+                                                position: "center-center",
+                                                icon: "success",
+                                                title: "สำเร็จ",
+                                                showConfirmButton: false,
+                                                timer: 1000
+                                            })
+                                            .then(() => {
+                                                window.location.href = "/";
+                                            });
                                     })
                                     .catch(error => {
                                         this.errorFile =
