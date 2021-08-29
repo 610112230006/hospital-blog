@@ -155,6 +155,7 @@
                                         multiple
                                         id="upload-file"
                                         @change="changFile"
+                                        accept=".doc,.docx,.zip,.xlsx,.xls,.pdf,.xls,.pptx,.ppt,.txt"
                                     />
                                     <div
                                         v-if="errorFile.file"

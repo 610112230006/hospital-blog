@@ -2854,6 +2854,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["id_content"],
   data: function data() {
@@ -3337,15 +3338,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -42370,7 +42362,13 @@ var render = function() {
                   _vm._v(" "),
                   _c("input", {
                     staticClass: "form-control",
-                    attrs: { type: "file", multiple: "", id: "upload-file" },
+                    attrs: {
+                      type: "file",
+                      multiple: "",
+                      id: "upload-file",
+                      accept:
+                        ".doc,.docx,.zip,.xlsx,.xls,.pdf,.xls,.pptx,.ppt,.txt"
+                    },
                     on: { change: _vm.changFile }
                   }),
                   _vm._v(" "),
@@ -42995,7 +42993,10 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "post-item-description" }, [
-                            _vm._m(1, true),
+                            _c("span", { staticClass: "post-meta-date" }, [
+                              _c("i", { staticClass: "fa fa-calendar-o" }),
+                              _vm._v(_vm._s(newContent.time_show))
+                            ]),
                             _vm._v(" "),
                             _c("h2", [
                               _c(
@@ -43063,29 +43064,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "page-title" }, [
-      _c("h1", [_vm._v("ข่าวประชาสัมพันธ์ (ล่าสุด)")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "breadcrumb float-left" }, [
-        _c("ul", [
-          _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("Home")])]),
-          _vm._v(" "),
-          _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("Blog")])]),
-          _vm._v(" "),
-          _c("li", { staticClass: "active" }, [
-            _c("a", { attrs: { href: "#" } }, [_vm._v("Sidebar Right")])
-          ])
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "post-meta-date" }, [
-      _c("i", { staticClass: "fa fa-calendar-o" }),
-      _vm._v("Jan\n                                        21, 2017")
+    return _c("div", { staticClass: "page-title mb-5" }, [
+      _c("h1", [_vm._v("ข่าวประชาสัมพันธ์ (ล่าสุด)")])
     ])
   }
 ]

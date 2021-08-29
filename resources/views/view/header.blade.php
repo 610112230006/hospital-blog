@@ -66,7 +66,7 @@
                                     <li><a href="user-edit-personal"><i class="icon-user"></i>แก้ไขข้อมูลส่วนตัว</a></li>
                                     <li><a href="{{ route('logout') }}"
                                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                            <i class="icon-log-out"></i>Sing Out</a>
+                                            <i class="icon-log-out"></i>ออกจากระบบ</a>
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                             class="d-none">
                                             @csrf

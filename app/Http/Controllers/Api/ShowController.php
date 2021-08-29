@@ -16,7 +16,8 @@ class ShowController extends Controller
 {
     public function ShowNew()
     {
-        $content = Content::orderBy('time_show', 'asc')->take(5)->get();
+        // $content = Content::orderBy('time_show', 'ds')->take(5)->get();
+        $content = DB::select('SELECT contents.* FROM contents ORDER BY contents.time_show DESC LIMIT 5');
         return response()->json($content);
     }
     public function ShowContentAllByCreate()

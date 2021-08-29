@@ -28,38 +28,39 @@ Route::get('/auth-user', function () {
 
 Route::get('/user', function () {
     return view('pages.admin.user.manage-user');
-});
+})->middleware('isAdmin');
 Route::get('/edit-user', function () {
     if (isset($_GET['id_user'])) {        
         return view('pages.admin.user.edit-user')->with('id_user', $_GET['id_user']);        
     }
-});
+})->middleware('isAdmin');
 Route::get('/user-create', function () {
     return view('pages.admin.user.create-user');
-});
+})->middleware('isAdmin');
+
 Route::get('/user-edit-personal', function () {
     return view('pages.user-edit-personal');
-});
+})->middleware('isUser');
 Route::get('/content-create', function () {
     return view('pages.content.create-content');
-});
+})->middleware('isUser');
 Route::get('/manage-content', function () {
     return view('pages.content.manage-content');
-});
+})->middleware('isUser');
 Route::get('/contact', function () {
     return view('pages.contact');
 });
-Route::get('/delete-content/{id_content}', [ContentController::class, 'destroy']);
-Route::get('/edit-content', [ContentController::class, 'edit']);
+Route::get('/delete-content/{id_content}', [ContentController::class, 'destroy'])->middleware('isUser');
+Route::get('/edit-content', [ContentController::class, 'edit'])->middleware('isUser');
 
-Route::get('/detail-content', [DetailController::class, 'show_detail']);
+Route::get('/detail-content', [DetailController::class, 'show_detail'])->middleware('isUser');
 
 Route::get('/manage-category', function () {
     return view('pages.admin.category.manage-category');
-});
+})->middleware('isAdmin');
 
-Route::post('/content', [ContentController::class, 'store']);
-Route::post('/update-content/{id_content}', [ContentController::class, 'update']);
+Route::post('/content', [ContentController::class, 'store'])->middleware('isUser');
+Route::post('/update-content/{id_content}', [ContentController::class, 'update'])->middleware('isUser');
 
 Auth::routes();
 
