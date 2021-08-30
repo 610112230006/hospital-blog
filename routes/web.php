@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Api\ContentController;
 use App\Http\Controllers\Api\UserController;
+
 use App\Http\Controllers\DetailController;
+use App\Http\Controllers\ForgotCustom;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +22,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 });
+Route::get('forgett-password', [ForgotCustom::class, 'showForgetPasswordForm']);
+Route::post('forgett-password', [ForgotCustom::class, 'submitForgetPasswordForm']);
+Route::get('reset-password/{token}', [ForgotCustom::class, 'showResetPasswordForm']);
+Route::post('resett-password', [ForgotCustom::class, 'submitResetPasswordForm']);
+
 
 Route::get('/auth-user', function () {
     return response()->json(Auth::user());
@@ -30,8 +37,8 @@ Route::get('/user', function () {
     return view('pages.admin.user.manage-user');
 })->middleware('isAdmin');
 Route::get('/edit-user', function () {
-    if (isset($_GET['id_user'])) {        
-        return view('pages.admin.user.edit-user')->with('id_user', $_GET['id_user']);        
+    if (isset($_GET['id_user'])) {
+        return view('pages.admin.user.edit-user')->with('id_user', $_GET['id_user']);
     }
 })->middleware('isAdmin');
 Route::get('/user-create', function () {
