@@ -111,7 +111,8 @@ export default {
                     showCancelButton: true,
                     confirmButtonColor: "#3085d6",
                     cancelButtonColor: "#d33",
-                    confirmButtonText: "ตกลง, ยกเลิก!"
+                    cancelButtonText: "ยกเลิก",
+                    confirmButtonText: "ตกลง"
                 })
                 .then(result => {
                     if (result.isConfirmed) {

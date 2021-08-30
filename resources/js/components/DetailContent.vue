@@ -76,7 +76,13 @@
                                             <span class="post-meta-comments"
                                                 ><i class="icon-user"></i>
                                                 {{
-                                                    `ผู้เขียน ${content.f_name} ${content.l_name}`
+                                                    `ผู้เขียน ${content.f_name} ${content.l_name}, `
+                                                }}</span
+                                            >
+                                            <span class="post-meta-comments"
+                                                ><i class="icon-eye"></i>
+                                                {{
+                                                    `เข้าชม ${statistic.number_preview} ครั้ง`
                                                 }}</span
                                             >
                                         </div>
@@ -110,12 +116,19 @@ export default {
         return {
             content: {},
             files: [],
-            checkAuth: false
+            checkAuth: false,
+            statistic: []
         };
     },
     created() {},
     mounted() {
         this.fetchData();
+        axios.get(`api/push-statistic/${this.id_content}`).then(res => {});
+        axios
+            .get(`api/get-statistic-by-content/${this.id_content}`)
+            .then(res => {
+                this.statistic = res.data;
+            });
     },
     methods: {
         fetchData() {
@@ -141,19 +154,56 @@ export default {
             axios
                 .get(`api/get-image-by-idContent/${this.id_content}`)
                 .then(res => {
-                    console.log(res.data);
                     this.files = res.data;
                 });
         },
         delContent(id_content) {
-            axios
-                .get(`delete-content/${id_content}`)
-                .then(res => {
-                    console.log(res.data);
-                    window.location.href = "/";
+            this.$swal
+                .fire({
+                    title: "คุณต้องการลบ ข่าวสารนี้จริง ๆ หรือไม่?",
+                    text: "ข้อมูลข่าวสารที่โพสข้อมูลไม่สามารถกู้คืนได้ !",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    cancelButtonText: "ยกเลิก",
+                    confirmButtonText: "ตกลง"
                 })
-                .catch(err => {
-                    console.log(err.response);
+                .then(result => {
+                    if (result.isConfirmed) {
+                        axios
+                            .get(`delete-content/${id_content}`)
+                            .then(res => {
+                                this.$swal
+                                    .fire({
+                                        position: "center-center",
+                                        icon: "success",
+                                        title: "สำเร็จ",
+                                        showConfirmButton: false,
+                                        timer: 1000
+                                    })
+                                    .then(() => {
+                                        window.location.href = '/'
+                                        // this.fetchData();
+                                    });
+                            })
+                            .catch(err => {
+                                console.log(err);
+                                this.$swal.fire(
+                                    "ไม่สำเร็จ!",
+                                    "การลบไม่สำเร็จ.",
+                                    "error"
+                                );
+                            });
+                    } else {
+                        this.$swal.fire({
+                            position: "center-center",
+                            icon: "info",
+                            title: "ยกเลิก",
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+                    }
                 });
         },
         dowloadFile(id) {

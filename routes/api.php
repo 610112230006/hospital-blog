@@ -46,6 +46,9 @@ Route::post('check-permiss-detail-content',[ShowController::class,'CheckPermissD
 Route::get('del-one-image/{id_file}',[ShowController::class,'DelOneImage']);
 Route::get('del-one-file/{id_file}',[ShowController::class,'DelOneFile']);
 
-
+// statistic
+Route::get('push-statistic/{id_content}',[ShowController::class,'PushStatis']);
+Route::get('get-statistic-all',[ShowController::class,'ShowStatisAll']);
+Route::get('get-statistic-by-content/{id_content}',[ShowController::class,'ShowStatisByContent']);
 
 

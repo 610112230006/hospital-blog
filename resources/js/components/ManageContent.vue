@@ -74,8 +74,9 @@
                                     </div>
                                     <div class="post-item-description">
                                         <span class="post-meta-date"
-                                            ><i class="fa fa-calendar-o"></i>Jan
-                                            21, 2017</span
+                                            ><i class="fa fa-calendar-o"></i>{{
+                                                showContent.time_show
+                                            }}</span
                                         >
                                         <h2>
                                             <a

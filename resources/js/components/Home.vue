@@ -12,7 +12,6 @@
                         <!-- Page title -->
                         <div class="page-title mb-5">
                             <h1>ข่าวประชาสัมพันธ์ (ล่าสุด)</h1>
-                           
                         </div>
                         <!-- end: Page title -->
                         <!-- Blog -->
@@ -62,8 +61,22 @@
                                         </a>
                                     </div>
                                     <div class="post-item-description">
-                                        <span class="post-meta-date"
-                                            ><i class="fa fa-calendar-o"></i>{{newContent.time_show}}</span
+                                        <span class="post-meta-date">
+                                            <i class="icon-clock"></i
+                                            >{{ `${newContent.time_show}, `}}</span
+                                        >
+                                        <span class="post-meta-date">
+                                            <i class="icon-user"></i>ผู้เขียน
+                                            {{
+                                                `${newContent.f_name} ${newContent.l_name}, `
+                                            }}</span
+                                        >
+                                        <span v-for="statistic in statistics" v-if="statistic.id_content == newContent.id" class="post-meta-date">
+                                            <i
+                                                class="icon-eye"
+                    
+                                            ></i
+                                            >เข้าชม {{statistic.number_preview}} ครั้ง</span
                                         >
                                         <h2>
                                             <a
@@ -99,9 +112,7 @@
                     <div
                         class="sidebar sticky-sidebar col-lg-3"
                         style="position: relative; overflow: visible; box-sizing: border-box; min-height: 1004px;"
-                    >
-                        
-                    </div>
+                    ></div>
                     <!-- end: Sidebar-->
                 </div>
             </div>
@@ -113,7 +124,8 @@ export default {
     data() {
         return {
             newContents: [],
-            newImgContents: []
+            newImgContents: [],
+            statistics: []
         };
     },
     created() {
@@ -122,8 +134,11 @@ export default {
             this.newContents = res.data;
         });
         axios.get("api/get-all-image").then(res => {
-            console.log(res.data);
             this.newImgContents = res.data;
+        });
+        axios.get("api/get-statistic-all").then(res => {
+            this.statistics = res.data;
+            console.log(this.statistics);
         });
     },
 

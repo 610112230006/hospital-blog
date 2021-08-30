@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Content;
 use App\Models\FileUpload;
+use App\Models\Statistics;
 use App\Models\SubCategory;
 use Illuminate\Http\Client\Response;
 use Illuminate\Http\Request;
@@ -17,7 +18,16 @@ class ShowController extends Controller
     public function ShowNew()
     {
         // $content = Content::orderBy('time_show', 'ds')->take(5)->get();
-        $content = DB::select('SELECT contents.* FROM contents ORDER BY contents.time_show DESC LIMIT 5');
+        $content = DB::select('SELECT contents.*, users.f_name, users.l_name
+        FROM
+            contents
+        INNER JOIN
+            users
+        ON 
+            contents.user_id = users.id
+        ORDER BY
+            contents.time_show DESC
+        LIMIT 5');
         return response()->json($content);
     }
     public function ShowContentAllByCreate()
@@ -98,6 +108,32 @@ class ShowController extends Controller
         $data = FileUpload::find($id_file);
         Storage::disk('public')->delete($data->url);
         $data->delete();
+        return response()->json($data);
+    }
+    public function PushStatis($id_content)
+    {
+        $check = Statistics::where('id_content', '=',$id_content)->first();
+        if ($check == null) {            
+            $res = Statistics::create([
+                'id_content' => $id_content,
+            ]);
+        } else{
+            $push_static = $check->number_preview + 1;
+            $res = $check->update([
+                'number_preview' => $push_static
+            ]);
+        }      
+        
+        return response()->json($res);
+    }
+    public function ShowStatisAll()
+    {
+        $data = Statistics::all();
+        return response()->json($data);
+    }
+    public function ShowStatisByContent($id_content)
+    {
+        $data = Statistics::where('id_content', '=',$id_content)->first();
         return response()->json($data);
     }
 }

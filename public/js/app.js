@@ -2549,53 +2549,97 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["id_content"],
   data: function data() {
     return {
       content: {},
       files: [],
-      checkAuth: false
+      checkAuth: false,
+      statistic: []
     };
   },
   created: function created() {},
   mounted: function mounted() {
+    var _this = this;
+
     this.fetchData();
+    axios.get("api/push-statistic/".concat(this.id_content)).then(function (res) {});
+    axios.get("api/get-statistic-by-content/".concat(this.id_content)).then(function (res) {
+      _this.statistic = res.data;
+    });
   },
   methods: {
     fetchData: function fetchData() {
-      var _this = this;
+      var _this2 = this;
 
       axios.get("api/get-content-by-id/".concat(this.id_content)).then(function (res) {
         var content = res.data[0];
-        _this.content = res.data[0];
+        _this2.content = res.data[0];
         axios.get("auth-user").then(function (res) {
           if (res.data.id == null) {
-            _this.checkAuth = false;
+            _this2.checkAuth = false;
           } else {
             if (res.data.type == "admin") {
-              _this.checkAuth = true;
+              _this2.checkAuth = true;
             } else if (res.data.type == "user") {
               if (content.user_id == res.data.id) {
-                _this.checkAuth = true;
+                _this2.checkAuth = true;
               } else {
-                _this.checkAuth = false;
+                _this2.checkAuth = false;
               }
             }
           }
         });
       });
       axios.get("api/get-image-by-idContent/".concat(this.id_content)).then(function (res) {
-        console.log(res.data);
-        _this.files = res.data;
+        _this2.files = res.data;
       });
     },
     delContent: function delContent(id_content) {
-      axios.get("delete-content/".concat(id_content)).then(function (res) {
-        console.log(res.data);
-        window.location.href = "/";
-      })["catch"](function (err) {
-        console.log(err.response);
+      var _this3 = this;
+
+      this.$swal.fire({
+        title: "คุณต้องการลบ ข่าวสารนี้จริง ๆ หรือไม่?",
+        text: "ข้อมูลข่าวสารที่โพสข้อมูลไม่สามารถกู้คืนได้ !",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "ยกเลิก",
+        confirmButtonText: "ตกลง"
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          axios.get("delete-content/".concat(id_content)).then(function (res) {
+            _this3.$swal.fire({
+              position: "center-center",
+              icon: "success",
+              title: "สำเร็จ",
+              showConfirmButton: false,
+              timer: 1000
+            }).then(function () {
+              window.location.href = '/'; // this.fetchData();
+            });
+          })["catch"](function (err) {
+            console.log(err);
+
+            _this3.$swal.fire("ไม่สำเร็จ!", "การลบไม่สำเร็จ.", "error");
+          });
+        } else {
+          _this3.$swal.fire({
+            position: "center-center",
+            icon: "info",
+            title: "ยกเลิก",
+            showConfirmButton: false,
+            timer: 1000
+          });
+        }
       });
     },
     dowloadFile: function dowloadFile(id) {
@@ -3448,11 +3492,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       newContents: [],
-      newImgContents: []
+      newImgContents: [],
+      statistics: []
     };
   },
   created: function created() {
@@ -3463,8 +3519,11 @@ __webpack_require__.r(__webpack_exports__);
       _this.newContents = res.data;
     });
     axios.get("api/get-all-image").then(function (res) {
-      console.log(res.data);
       _this.newImgContents = res.data;
+    });
+    axios.get("api/get-statistic-all").then(function (res) {
+      _this.statistics = res.data;
+      console.log(_this.statistics);
     });
   },
   mounted: function mounted() {}
@@ -3960,6 +4019,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -4154,7 +4214,8 @@ __webpack_require__.r(__webpack_exports__);
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "ตกลง, ยกเลิก!"
+        cancelButtonText: "ยกเลิก",
+        confirmButtonText: "ตกลง"
       }).then(function (result) {
         if (result.isConfirmed) {
           axios["delete"]("api/user/".concat(id)).then(function (res) {
@@ -42051,7 +42112,24 @@ var render = function() {
                                         "ผู้เขียน " +
                                           _vm.content.f_name +
                                           " " +
-                                          _vm.content.l_name
+                                          _vm.content.l_name +
+                                          ", "
+                                      )
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "span",
+                                { staticClass: "post-meta-comments" },
+                                [
+                                  _c("i", { staticClass: "icon-eye" }),
+                                  _vm._v(
+                                    "\n                                            " +
+                                      _vm._s(
+                                        "เข้าชม " +
+                                          _vm.statistic.number_preview +
+                                          " ครั้ง"
                                       )
                                   )
                                 ]
@@ -42992,16 +43070,68 @@ var render = function() {
                             )
                           ]),
                           _vm._v(" "),
-                          _c("div", { staticClass: "post-item-description" }, [
-                            _c("span", { staticClass: "post-meta-date" }, [
-                              _c("i", { staticClass: "fa fa-calendar-o" }),
-                              _vm._v(_vm._s(newContent.time_show))
-                            ]),
-                            _vm._v(" "),
-                            _c("h2", [
+                          _c(
+                            "div",
+                            { staticClass: "post-item-description" },
+                            [
+                              _c("span", { staticClass: "post-meta-date" }, [
+                                _c("i", { staticClass: "icon-clock" }),
+                                _vm._v(_vm._s(newContent.time_show + ", "))
+                              ]),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "post-meta-date" }, [
+                                _c("i", { staticClass: "icon-user" }),
+                                _vm._v(
+                                  "ผู้เขียน\n                                        " +
+                                    _vm._s(
+                                      newContent.f_name +
+                                        " " +
+                                        newContent.l_name +
+                                        ", "
+                                    )
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _vm._l(_vm.statistics, function(statistic) {
+                                return statistic.id_content == newContent.id
+                                  ? _c(
+                                      "span",
+                                      { staticClass: "post-meta-date" },
+                                      [
+                                        _c("i", { staticClass: "icon-eye" }),
+                                        _vm._v(
+                                          "เข้าชม " +
+                                            _vm._s(statistic.number_preview) +
+                                            " ครั้ง"
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e()
+                              }),
+                              _vm._v(" "),
+                              _c("h2", [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: {
+                                      href:
+                                        "/detail-content?id_content=" +
+                                        newContent.id
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      _vm._s(newContent.title) +
+                                        "\n                                        "
+                                    )
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
                               _c(
                                 "a",
                                 {
+                                  staticClass: "item-link",
                                   attrs: {
                                     href:
                                       "/detail-content?id_content=" +
@@ -43010,31 +43140,14 @@ var render = function() {
                                 },
                                 [
                                   _vm._v(
-                                    _vm._s(newContent.title) +
-                                      "\n                                        "
-                                  )
+                                    "อ่านต่อ...\n                                        "
+                                  ),
+                                  _c("i", { staticClass: "icon-chevron-right" })
                                 ]
                               )
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "a",
-                              {
-                                staticClass: "item-link",
-                                attrs: {
-                                  href:
-                                    "/detail-content?id_content=" +
-                                    newContent.id
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  "อ่านต่อ...\n                                        "
-                                ),
-                                _c("i", { staticClass: "icon-chevron-right" })
-                              ]
-                            )
-                          ])
+                            ],
+                            2
+                          )
                         ])
                       ])
                     }),
@@ -43559,7 +43672,10 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "post-item-description" }, [
-                      _vm._m(2, true),
+                      _c("span", { staticClass: "post-meta-date" }, [
+                        _c("i", { staticClass: "fa fa-calendar-o" }),
+                        _vm._v(_vm._s(showContent.time_show))
+                      ]),
                       _vm._v(" "),
                       _c("h2", [
                         _c(
@@ -43649,15 +43765,6 @@ var staticRenderFns = [
           )
         ]
       )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "post-meta-date" }, [
-      _c("i", { staticClass: "fa fa-calendar-o" }),
-      _vm._v("Jan\n                                        21, 2017")
     ])
   }
 ]
