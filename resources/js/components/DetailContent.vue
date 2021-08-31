@@ -120,7 +120,7 @@ export default {
             statistic: []
         };
     },
-    created() {},
+    
     mounted() {
         this.fetchData();
         axios.get(`api/push-statistic/${this.id_content}`).then(res => {});

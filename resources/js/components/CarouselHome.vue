@@ -3,9 +3,10 @@
         <carousel
             :perPage="1"
             :loop="true"
+            :autoplayHoverPause="true"
             :autoplay="true"
             :navigationEnabled="true"
-            style="wi:100%"
+            style="width:100%"
         >
             <slide>
                 <img

@@ -90,7 +90,7 @@
                                     type="file"
                                     class="form-control"
                                     multiple
-                                    accept="image/jpeg"
+                                    accept="image"
                                     id="upload-img"
                                     @change="changImage"
                                 />

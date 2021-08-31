@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 });
+
 Route::get('forgett-password', [ForgotCustom::class, 'showForgetPasswordForm']);
 Route::post('forgett-password', [ForgotCustom::class, 'submitForgetPasswordForm']);
 Route::get('reset-password/{token}', [ForgotCustom::class, 'showResetPasswordForm']);

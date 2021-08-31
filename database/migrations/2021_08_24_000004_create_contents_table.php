@@ -19,7 +19,7 @@ class CreateContentsTable extends Migration
             $table->string('title');
             $table->string('type');
             $table->text('detail');
-            $table->date('time_show');
+            $table->date('time_show');            
             $table->timestamps();
         });
     }

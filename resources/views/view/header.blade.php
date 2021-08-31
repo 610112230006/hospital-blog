@@ -31,7 +31,7 @@
         <div class="container">
             <!--Logo-->
             <div id="logo"> <a href="/"><span class="logo-default"><img src="images/logos/logo-moph.png" alt=""
-                            height="60" width="100%" srcset=""></span><span class="logo-dark">POLO</span></a>
+                            height="30" width="100%" srcset=""></span><span class="logo-dark">POLO</span></a>
             </div>
             <!--End: Logo-->
             <!-- Search -->
@@ -47,35 +47,36 @@
             <div class="header-extras">
                 <ul>
                     @guest
-                    <li>
-                        
-                            <a href="{{ route('login') }}"> <i class="icon-log-in"></i></a>
-                                              
+                        <li>
 
-                    </li>
+                            <a href="{{ route('login') }}"> <i class="icon-log-in"></i></a>
+
+
+                        </li>
                     @else
-                    <div class="p-dropdown">
-                        <a class="btn btn-light btn-shadow btn-rounded btn-icon"><i class="icon-user"></i></a>
-                        <div class="p-dropdown-content">
-                            <div class="widget-myaccount">
-                                <div class="d-block">
-                                    <img class="avatar avatar-lg" src="images/avatar.jpeg">
+                        <div class="p-dropdown">
+                            <a class="btn btn-light btn-shadow btn-rounded btn-icon"><i class="icon-user"></i></a>
+                            <div class="p-dropdown-content">
+                                <div class="widget-myaccount">
+                                    <div class="d-block">
+                                        <img class="avatar avatar-lg" src="images/avatar.jpeg">
+                                    </div>
+                                    <span>{{ Auth::user()->f_name }}&nbsp;{{ Auth::user()->l_name }}</span>
+                                    <ul class="text-center">
+                                        <li><a href="user-edit-personal"><i
+                                                    class="icon-user"></i>แก้ไขข้อมูลส่วนตัว</a></li>
+                                        <li><a href="{{ route('logout') }}"
+                                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                <i class="icon-log-out"></i>ออกจากระบบ</a>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                                class="d-none">
+                                                @csrf
+                                            </form>
+                                        </li>
+                                    </ul>
                                 </div>
-                                <span>{{ Auth::user()->f_name }}&nbsp;{{ Auth::user()->l_name }}</span>
-                                <ul class="text-center">
-                                    <li><a href="user-edit-personal"><i class="icon-user"></i>แก้ไขข้อมูลส่วนตัว</a></li>
-                                    <li><a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                            <i class="icon-log-out"></i>ออกจากระบบ</a>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                            class="d-none">
-                                            @csrf
-                                        </form>
-                                    </li>
-                                </ul>
                             </div>
                         </div>
-                    </div>
                     @endguest
 
 
@@ -95,29 +96,17 @@
                     <nav>
                         <ul>
                             <li><a href="/">หน้าแรก</a></li>
-                            <li><a href="">เกี่ยวกับเรา</a></li>
-                            <li><a href="">งานกฎหมาย</a></li>
-                            <li><a href="">งานวินัย/ละเมิด</a></li>
-                            <li><a href="">งานคุ้มครองจริยธรรม</a></li>
-                            <li><a href="">ร้องเรียน/ร้องทุก</a></li>
-                            <li><a href="contact">ติดต่อเรา</a></li>
-                            {{-- <li class="dropdown"><a href="#">Layout</a>
+                            <li class="dropdown"><a href="#">เกี่ยวกับเรา</a>
                                 <ul class="dropdown-menu">
-                                    <li class="dropdown-submenu"><a href="#">อํานาจหน้าที่</a>
-
+                                    <li><a href="#">อํานาจหน้าที่</a>
                                     </li>
-                                    <li class="dropdown-submenu"><a href="#">วิสัยทัศน์ พันธกิจ</a>
+                                    <li><a href="#">วิสัยทัศน์ พันธกิจ</a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="">Light</a></li>
-                                            <li><a href="">Dark</a></li>
-                                            <li><a href="">Transparent</a></li>
-                                            <li><a href="">Colored</a></li>
-                                            <li><a href="">Fullwidth</a></li>
                                         </ul>
                                     </li>
-                                    <li class="dropdown-submenu"><a href="#">โครงสร้างกลุ่ม</a>
+                                    <li class="dropdown-submenu"><a href="">โครงสร้างกลุ่ม</a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="">งานกฎหมาย นิติกรรม และคดี</a></li>
+                                            <li><a href="contentbysubcate?id=13">งานกฎหมาย นิติกรรม และคดี</a></li>
                                             <li><a href="">งานสอบสวน วินัย และความ
                                                     รับผิดทางละเมิด
                                                 </a>
@@ -135,15 +124,189 @@
 
                                         </ul>
                                     </li>
-                                    <li class="dropdown"><a href="#">Happy DMS</a>
-                                        
+                                    <li><a href="#">Happy DMS</a>
                                     </li>
-                                    <li class="dropdown"><a href="#">ปฏิทินกิจกรรม</a>
-                                        
+                                    <li><a href="#">ปฏิทินกิจกรรม</a>
+                                    </li>
+
+
+                                </ul>
+                            </li>
+
+
+                            <li class="dropdown"><a href="">งานกฎหมาย</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">กฎหมายที่เกี่ยวข้อง</a>
+                                    </li>
+                                    <li><a href="#">มอบอำนาจ</a>
+                                    </li>
+
+                                    <li class="dropdown-submenu"><a href="#">กฎหมายการแพทย์</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="">กฎหมาย COVID-19</a></li>
+                                            <li><a href="">แรงงานทางทะเล
+                                                </a>
+                                            </li>
+                                            <li><a href="">การจัดการนวัตกรรมทางการแพทย์</a></li>
+
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu"><a href="#">นิติกรรมและสัญญา</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="">กฎหมายระเบียบการลาศึกษาฝึกอบรม</a></li>
+                                            <li><a href="">กฎหมาย ระเบียบพัสดุ</a>
+                                            </li>
+                                            <li><a href="">หนังสือเวียนเกี่ยวกับนิตกิรรมและสัญญา</a></li>
+                                            <li><a href="">ตัวอย่างสัญญา</a></li>
+
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">MOU กรมการแพทย์</a>
+                                    </li>
+                                    <li class="dropdown-submenu"><a href="#">คดี</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="">สถิติคดี</a></li>
+                                            <li><a href="">หนังสือเวียนเกี่ยวกับคดี</a>
+                                            </li>
+                                            <li><a href="">การแจ้งความดําเนินคดี</a></li>
+                                            <li><a href="">ตัวอย่างแบบฟอร์ม</a></li>
+
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">ตอบข้อหารือ / ให้ความเห็น</a>
+                                    </li>
+                                    <li><a href="#">การอบรม</a>
+                                    </li>
+                                    <li><a href="#">รวมคําพิพากษา</a>
+                                    </li>
+
+
+                                </ul>
+                            </li>
+
+                            <li><a href="">งานวินัย/ละเมิด</a>
+                                <ul class="dropdown-menu">
+
+
+                                    <li class="dropdown-submenu"><a href="#">วินัย</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="">กฎหมายที่เกี่ยวข้อง</a></li>
+                                            <li><a href="">คู่มือการดําเนินการทางวินัย
+                                                </a>
+                                            </li>
+                                            <li><a href="">แนวทางการลงโทษ</a></li>
+                                            <li><a href="">สถิติิการดําเนินการทางวินัย</a></li>
+
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu"><a href="#">อุทธรณ์</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="">กฎหมายที่เกี่ยวข้อง</a></li>
+
+                                        </ul>
+                                    </li>
+
+                                    <li class="dropdown-submenu"><a href="#">ร้องทุกข์</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="">กฎหมายที่เกี่ยวข้อง</a></li>
+
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu"><a href="#">ความรับผิดทางละเมิด</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="">กฎหมายที่เกี่ยวข้อง</a></li>
+                                            <li><a href="">สื่อเสริมสร้างวินัย</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu"><a href="#">แนวทางเสริมสร้างวินัย</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="">หนังสือ ก.พ.</a></li>
+                                            <li><a href="">สื่อเสริมสร้างวินัย</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">ตอบข้อหารือ / ให้ความเห็น</a>
+                                    </li>
+                                    <li><a href="#">การอบรม</a>
+                                    </li>
+                                    <li><a href="#">รวมคําพิพากษา</a>
+                                    </li>
+                                    <li><a href="#">บทความที่น่าสนใจ-ตอบข้อหารือ</a>
                                     </li>
 
                                 </ul>
-                            </li> --}}
+                            </li>
+                            <li><a href="">งานคุ้มครองจริยธรรม</a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-submenu"><a href="#">Anti Corruption</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="">การจัดการความเสี่ยงด้านทุจริต</a></li>
+                                            <li><a href="">มาตรการป้องกันการทุจริต
+                                                </a>
+                                            </li>
+                                            <li><a href="">การจัดการผลประโยชน์ทับซ้อน</a></li>
+
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu"><a href="#">แผนปฏิบัติราชการ</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="">2564 (ชาติ–กระทรวง–กรม รายละเอียด การรายงานผล)</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="dropdown-submenu"><a href="#">โครงการส่งเสริมคุณธรรมปัองกัน
+                                            และปราบปรามการทุจริต</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="">2564 (รายละเอียด–รายงานผล)</a></li>
+
+
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu"><a href="#">ITA</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="">2564 (รายละเอียด–การ ดําเนินงาน–ผล)</a></li>
+
+
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">คํารับรองการปฏิบัติราชการ</a>
+                                    </li>
+                                    <li class="dropdown-submenu"><a href="#">คุ้มครองจริยธรรม</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="">การดําเนินงานของคณะกรรมการจริยธรรม</a></li>
+                                        </ul>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="">ประมวลจริยธรรม</a></li>
+                                        </ul>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="">ข้อกําหนดจริยธรรม</a></li>
+                                        </ul>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="">ธรรมาภิบาล(เปิดเผยข้อมูล)</a></li>
+                                        </ul>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="">องค์กรคุณธรรม</a></li>
+                                        </ul>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="">องค์กรต้นแบบด้านสิทธิมนุษยชน</a></li>
+                                        </ul>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="">ความเสมอภาค หญิง-ชาย</a></li>
+                                        </ul>
+                                    <li><a href="#">สื่อเผยแพร่</a>
+                                    </li>
+                                    <li><a href="#">การประชุม อบรม</a>
+                                    </li>
+                            </li>
+
+
+
+                        </ul>
+                        </li>
+                        <li><a href="">ร้องเรียน/ร้องทุกข์</a>
+                            
+                        </li>
+                        <li><a href="contact">ติดต่อเรา</a></li>
+
 
                         </ul>
                     </nav>
